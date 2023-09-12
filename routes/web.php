@@ -14,16 +14,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('name/{name?}', function (string $name) {
-    return 'Tên của bạn là: '.$name;
+Route::get('name/{name}/{age}', function (string $name, $age) {
+    return 'Tên của bạn là: '.$name.'. Tuổi: '.$age;
     /**
-     * khi đó : http://localhost:8000/name/Nguyen-Minh-Hieu
-     * sẽ render ra : Tên của bạn là: Nguyen-Minh-Hieu
+     * khi đó : http://localhost:8000/name/Nguyen-Minh-Hieu/18
+     * sẽ render ra : Tên của bạn là: Nguyen-Minh-Hieu. Tuổi: 18
      *
      * nếu : http://localhost:8000/name/
      * thì sẽ bị 404
      */
-});
+})->where('name', '[a-zA-Z-]+')->where('age', '[\d]+');
 Route::get('web/{slug}-{id}.html',function ($id,$slug){
     $content = 'id: '.$id.'<br />';
     $content.= 'slug: '.$slug;
@@ -37,5 +37,10 @@ Route::get('web/{slug}-{id}.html',function ($id,$slug){
      * + bắt buộc số lượng param của cả 2 phải bằng nhau
      * + vị trí params bên trong funtion sẽ có giá trị tương ứng với vị trí bên trong url
     */
-});
+})->where(
+    [
+        'slug'=>'[a-z-]+',
+        'id'=>'[\d]+',
+    ]
+);
 
