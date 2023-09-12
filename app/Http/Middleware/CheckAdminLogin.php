@@ -15,6 +15,6 @@ class CheckAdminLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        return redirect(route('home'));
     }
 }
