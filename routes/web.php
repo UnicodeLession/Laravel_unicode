@@ -16,8 +16,12 @@ use Illuminate\Http\Request;
 Route::get('/', function (){
     return view('welcome');
 });
-Route::get('product', function (){
-    return 'Danh sách sản phẩm';
+Route::get('product/{id}', function (string $id){
+    return 'ID sản phẩm: '.$id;
+    /**
+     * nếu trong welcome.blade.php:
+     * dùng route('san-pham', ['id'=>1]) thì không bắt buộc phải có ?
+    */
 })->name('san-pham');
 Route::prefix('group')->group(function (){
     Route::get('add', function (){

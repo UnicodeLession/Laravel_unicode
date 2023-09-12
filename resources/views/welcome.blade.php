@@ -18,7 +18,8 @@
     <body class="antialiased">
         <div>
             <?php echo (!empty($name))?$name:false; ?>
-            <a href="<?php echo route('san-pham') ?>">Truy cập vào danh sách sản phẩm</a>
+            <a href="<?php echo route('san-pham', ['id'=>1]) ?>">
+                Truy cập vào danh sách sản phẩm</a>
         </div>
         <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
             @if (Route::has('login'))
