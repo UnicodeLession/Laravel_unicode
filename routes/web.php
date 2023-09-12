@@ -28,3 +28,17 @@ Route::post('/', function () {
  * khi nhập xong form và gửi thì nó sẽ render ra "Đã xong với phương thức post"
  */
 
+/**
+ * ! Với Nhiều Requests
+ * ! Route::match([requests], '/match', function (){});
+ */
+Route::match(['get', 'post'], 'requests', function (){
+    return $_SERVER['REQUEST_METHOD'];
+});
+Route::get('show_form', function (){
+   return view('form');
+});
+/**
+ * khi đó ta truy cập vào http://localhost:8000/requests sẽ render ra GET
+ * mà khi truy cập vào show_form rồi submit thì khi chuyển qua trang http://localhost:8000/requests sẽ render ra POST
+*/
