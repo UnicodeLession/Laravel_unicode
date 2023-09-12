@@ -58,6 +58,11 @@ Route::get('show_form', function (){
 /**
  * ! Dùng redirect
  * ! Route::redirect('redirect-from', 'redirect-to', status-code=301)
- * 
+ *
 */
 Route::redirect('about-us', 'about');
+/**
+ * ! dùng view để render
+ * Route::view('url',  'view-name' , ['key' => 'value' ])
+*/
+Route::view('/welcome', 'welcome', ['name'=> 'Nguyễn Minh Hiếu']);
