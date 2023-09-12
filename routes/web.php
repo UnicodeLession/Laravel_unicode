@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,12 +34,23 @@ Route::post('/', function () {
  * ! Route::match([requests], '/match', function (){});
  */
 Route::match(['get', 'post'], 'requests', function (){
-    return $_SERVER['REQUEST_METHOD'];
+   return $_SERVER['REQUEST_METHOD'];
 });
 Route::get('show_form', function (){
-   return view('form');
+  return view('form');
 });
 /**
  * khi đó ta truy cập vào http://localhost:8000/requests sẽ render ra GET
  * mà khi truy cập vào show_form rồi submit thì khi chuyển qua trang http://localhost:8000/requests sẽ render ra POST
 */
+/**
+ * ! Với trang dùng tất cả request thì sẽ dùng any
+ * ! Route::any('/any', function (){});
+ * * để thử hãy change value của input _method rồi vào http://localhost:8000/show_form rồi ấn vào gửi rồi sẽ show method
+*/
+Route::any('/any', function (Request $request){
+    return $request->method();
+});
+Route::get('show_form', function (){
+    return view('form');
+});
