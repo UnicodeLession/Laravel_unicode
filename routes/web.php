@@ -14,5 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('form');
 });
+// khi đó khi truy cập vào http://localhost:8000/ thì sẽ render file \resources\views\welcome.blade.php
+/**
+ * ! Route::request('url', callbackFuntion() {})
+*/
+Route::post('/', function () {
+   return 'Đã xong với phương thức post';
+});
+/**
+ * khi đó ta truy cập vào http://localhost:8000/ thì nó sẽ render ra form để nhập input
+ * khi nhập xong form và gửi thì nó sẽ render ra "Đã xong với phương thức post"
+ */
+
