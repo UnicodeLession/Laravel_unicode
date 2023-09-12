@@ -54,3 +54,10 @@ Route::any('/any', function (Request $request){
 Route::get('show_form', function (){
     return view('form');
 });
+
+/**
+ * ! Dùng redirect
+ * ! Route::redirect('redirect-from', 'redirect-to', status-code=301)
+ * 
+*/
+Route::redirect('about-us', 'about');
