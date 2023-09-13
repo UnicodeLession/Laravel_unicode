@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\Admin\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,9 +32,7 @@ Route::prefix('categories')->group(function (){
     Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
 });
 //admin Route
-Route::prefix('admin')->group(function (){
+Route::middleware('auth.admin')->prefix('admin')->group(function (){
+    Route::get('/', [DashboardController::class, 'index']);
     Route::resource('products', ProductsController::class);
-    /**
-     * https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controller
-    */
 });
