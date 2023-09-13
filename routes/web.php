@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Admin\ProductsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,4 +29,11 @@ Route::prefix('categories')->group(function (){
     Route::post('/add', [CategoriesController::class, 'handleAddCategory']);
     // xóa chuyên mục
     Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
+});
+//admin Route
+Route::prefix('admin')->group(function (){
+    Route::resource('products', ProductsController::class);
+    /**
+     * https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controller
+    */
 });
