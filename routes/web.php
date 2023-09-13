@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoriesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,11 +14,18 @@ use App\Http\Controllers\HomeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// Dùng Controller
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/news',
-    'App\Http\Controllers\HomeController@getNews')->name('news');
-Route::get('/products',
-    'HomeController@getProducts')
-    ->name('products');
-
+// CategoryController
+Route::prefix('categories')->group(function (){
+    // Danh sách chuyên mục
+    Route::get('/', [CategoriesController::class, 'index'])->name('categories.lists');
+    // Lấy chi tiết 1 chuyên mục
+    Route::get('/edit/{id}', [CategoriesController::class, 'getCategory'])->name('categories.edit');
+    // xử lý update chuyên mục
+    Route::post('/edit/{id}', [CategoriesController::class, 'updateCategory']);
+    // Hiển thị form add dữ liệu
+    Route::get('/add',  [CategoriesController::class, 'addCategory'])->name('categories.add');
+    // xử lý thêm chuyên mục
+    Route::post('/add', [CategoriesController::class, 'handleAddCategory']);
+    // xóa chuyên mục
+    Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
+});
