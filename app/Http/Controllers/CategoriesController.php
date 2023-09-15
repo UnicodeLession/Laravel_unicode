@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; // xử dụng HTTP request
 
 class CategoriesController extends Controller
 {
