@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -38,3 +39,9 @@ Route::middleware('auth.admin')->prefix('admin')->group(function (){
 });
 // show props của Request
 Route::get('request', [CategoriesController::class, 'showRequest']);
+
+// home blade template
+Route::prefix('blade')->group(function (){
+    Route::get('/', [HomeController::class, 'index']);
+});
+
