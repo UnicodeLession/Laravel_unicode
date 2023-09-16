@@ -36,3 +36,5 @@ Route::middleware('auth.admin')->prefix('admin')->group(function (){
     Route::get('/', [DashboardController::class, 'index']);
     Route::resource('products', ProductsController::class);
 });
+// show props của Request
+Route::get('request', [CategoriesController::class, 'showRequest']);
