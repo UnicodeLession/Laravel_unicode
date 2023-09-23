@@ -12,4 +12,11 @@
 
 @section('content')
     <h1>Trang Chủ</h1>
+
+@endsection
+@section('css')
+
+@endsection
+@section('js')
+
 @endsection

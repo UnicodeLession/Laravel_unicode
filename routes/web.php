@@ -20,3 +20,6 @@ use App\Http\Controllers\Admin\DashboardController;
 // home blade template
 Route::get('/', [HomeController::class, 'index']);
 Route::get('san-pham', [HomeController::class, 'products']);
+
+Route::get('/them-san-pham', [HomeController::class, 'getAdd']);
+Route::post('/them-san-pham', [HomeController::class, 'postAdd']);

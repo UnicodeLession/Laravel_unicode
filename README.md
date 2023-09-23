@@ -54,5 +54,49 @@ php artisan make:controller HomeController
 ```angular2html
 php artisan make:controller Admin/ProductsController --resource
 ```
-- Tạo ra Controller và dựng sẵn kiểu bên trong
-- 
+- Tạo ra Controller và dựng sẵn kiểu
+3. Tạo Component
+```angular2html
+php artisan make:component Alert
+```
+- sẽ tạo file Alert.php trong ___app/View/Components___
+- sẽ tạo file alert.blade.php trong ___resources/views/components___    
+* ___Đăng ký component___: thêm vào `AppServiceProvider`
+```php
+use Illuminate\Support\Facades\Blade;
+use App\View\Components\Alert;
+
+function boot(){
+    Blade::component('package-alert', \App\View\Components\Alert::class);
+}
+```
+- `package-alert` : Tên dùng để gọi component bên view
+- `Alert` : Tên class component đã tạo ở trên
+* ___Gọi ra trong view___
+```php
+<x-package-alert />
+```
+* ___Gọi ra component khi 2 tên trùng nhau nhưng khác nhau bên trong folder___
+- NOTE khi dùng `use` thì phải dùng alias `as`
+```php
+<x-input.button />
+<x-forms-input />
+```
+* ___Truyền dữ liệu vào component___
+* NOTE: trong class khai báo dạng camelCase nhưng bên view thì phân cách bởi -
+* Trong Class Alert
+```php
+public $type, $message, $dataIcon;
+public function __construct($type='', $message, $dataIcon)
+{
+    //
+    $this->type = $type;
+    $this->message =$message;
+    $this->dataIcon = $dataIcon;
+}
+```
+* Trong view
+```php 
+<x-package-alert type="danger" : message="Đặt hàng không thành công" : data-icon="check"/>
+```
+
