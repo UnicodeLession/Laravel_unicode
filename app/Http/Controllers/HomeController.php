@@ -21,6 +21,19 @@ class HomeController extends Controller
         return view('clients.add', $this->data);
     }
     function postAdd(Request $request){
-        dd($request);
+         $request->validate(
+             // https://laravel.com/docs/10.x/validation#available-validation-rules
+             [
+                 'product_price'=> 'required|integer',
+                 'product_name'=> 'required|min:6'
+             ],
+             [
+                 'product_name.required'=>'Vui lòng nhập tên sản phẩm',
+                 'product_name.min'=>'Tên sản phẩm không được bé hơn :min kí tự', // sẽ lấy giá trị min bên trên xuống
+                 'product_price.required'=>'Vui lòng nhập giá sản phẩm',
+                 'product_price.interger'=>'Giá sản phẩm phải là giá trị số',
+             ]
+         );
+         //
     }
 }

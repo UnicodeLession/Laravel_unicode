@@ -100,3 +100,12 @@ public function __construct($type='', $message, $dataIcon)
 <x-package-alert type="danger" : message="Đặt hàng không thành công" : data-icon="check"/>
 ```
 
+## Validation
+0. Error : https://laravel.com/docs/10.x/validation#quick-displaying-the-validation-errors
+1. validate() từ lớp Request()
+- $request->validate($rule, $massage)
+   
+- $rule = ['name_input' => "[rule](https://laravel.com/docs/10.x/validation#available-validation-rules)"]
+- $massage = ['name_input.rule'=> "massage"]
+2. Form Request 
+3. Class Validator()

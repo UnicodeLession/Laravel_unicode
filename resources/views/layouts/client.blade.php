@@ -26,7 +26,7 @@
             <div class="col-8">
                 <div class="content">
                     @yield('content')
-                    <x-package-alert type="danger" : message="Đặt hàng không thành công" : data-icon="xmark"/>
+{{--                    <x-package-alert type="danger" : message="Đặt hàng không thành công" : data-icon="xmark"/>--}}
                 </div>
             </div>
         </div>
