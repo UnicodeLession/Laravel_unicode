@@ -117,3 +117,10 @@ public function __construct($type='', $message, $dataIcon)
 php artisan make:request StorePostRequest
 ```
 3. Class Validator()
+```php
+$validation=Validator::make($input, $rules, $messages,$attributes);
+/**
+ * ?  $input: là mảng dữ liệu chứa các dữ liệu cần validation ( thường truyền $request->all() )
+ * ?  $attributes: là mảng chứa các tên trường (có thể bỏ trống)
+*/
+```
