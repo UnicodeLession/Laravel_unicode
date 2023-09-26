@@ -8,12 +8,9 @@
     <h1>Thêm Sản Phẩm</h1>
 
     <form action="" method="POST">
-        @if ($errors->any())
-{{--            @dd($errors->any())--}}
-            <div class="alert alert-danger text-center">
-                Vui lòng kiểm tra lại dữ liệu
-            </div>
-        @endif
+        @error('msg')
+            <div class="alert alert-danger text-center">{{ $message }}</div>
+        @enderror
         <div class="mb-3">
             <label>Tên Sản Phẩm</label>
             <input type="text" class="form-control" name="product_name" placeholder="Tên Sản Phẩm">

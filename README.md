@@ -38,6 +38,11 @@ php artisan up
 ```
 
 ## Các kiểu khác
+0. khi 
+```php
+dd($variable)
+```
+thì cái #messages: array:2 [▶] gọi là [Collections](https://laravel.com/docs/10.x/collections)
 1. tạo middleware 
 ```angular2html
 php artisan make:middleware MiddelwareName 
@@ -108,4 +113,7 @@ public function __construct($type='', $message, $dataIcon)
 - $rule = ['name_input' => "[rule](https://laravel.com/docs/10.x/validation#available-validation-rules)"]
 - $massage = ['name_input.rule'=> "massage"]
 2. Form Request 
+```php
+php artisan make:request StorePostRequest
+```
 3. Class Validator()
