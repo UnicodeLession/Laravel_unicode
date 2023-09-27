@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 
+use App\Rules\Uppercase;
+
 use Illuminate\Support\Facades\Validator;
 class HomeController extends Controller
 {
@@ -26,7 +28,7 @@ class HomeController extends Controller
         $input = $request->all();
         $rules = [
             'product_price'=> 'required|integer',
-            'product_name'=> 'required|min:6'
+            'product_name'=> ['required', 'min:6', new Uppercase()]
         ];
         $messages = [
              'required'=>'Vui lòng nhập :attribute',
@@ -42,8 +44,6 @@ class HomeController extends Controller
         if ($validation->fails()){ // không có sự chuyển hướng trang
             $validation->errors()->add('msg', 'Vui lòng kiểm tra lại dữ liệu đã nhập!');
 //            return 'Validate Thất Bại';
-        } else{
-//            return ' Validate Thành Công';
         }
         return back()->withErrors($validation);
         /**

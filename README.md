@@ -124,3 +124,17 @@ $validation=Validator::make($input, $rules, $messages,$attributes);
  * ?  $attributes: là mảng chứa các tên trường (có thể bỏ trống)
 */
 ```
+4. Tạo Rule
+[Create Rule](https://laravel.com/docs/10.x/validation#custom-validation-rules)
+```php
+php artisan make:rule Uppercase
+```
+to use:
+```php
+use App\Rules\Uppercase;
+ 
+$request->validate([
+    'name' => ['required', 'string', new Uppercase],
+]);
+```
+5. Custom $message trong lang khi dùng trans() : ___\vendor\laravel\framework\src\Illuminate\Translation\lang\en\validation.php___
