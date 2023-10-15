@@ -10,6 +10,8 @@
         </div>
     @endif
     <h1>{{ $title }}</h1>
+    <a href="{{route('users.add')}}" class="btn btn-primary">Thêm Người dùng</a>
+    <hr>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -20,8 +22,8 @@
             </tr>
         </thead>
         <tbody>
-            @if(!empty($users))
-                @foreach($users as $key=>$user)
+            @if(!empty($usersList))
+                @foreach($usersList as $key=>$user)
                 <tr>
                     <td>{{$key + 1}}</td>
                     <td>{{ $user->name }}</td>
