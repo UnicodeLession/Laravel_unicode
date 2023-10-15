@@ -11,6 +11,11 @@
 @endsection
 
 @section('content')
+    @if(session('msg'))
+        <div class="alert alert-{{session('type')}} text-center">
+            {{ session('msg') }}
+        </div>
+    @endif
     <h1>Sản Phẩm</h1>
 @endsection
 @section('css')

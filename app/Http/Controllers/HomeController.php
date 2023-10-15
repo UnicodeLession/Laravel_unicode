@@ -28,7 +28,9 @@ class HomeController extends Controller
         $input = $request->all();
         $rules = [
             'product_price'=> 'required|integer',
-            'product_name'=> ['required', 'min:6', new Uppercase()]
+            'product_name'=> ['required', 'min:6', function($attributes, $value, $fail){
+                isUppercase($value, 'Trường :attribute không hợp lệ.', $fail);
+            }]
         ];
         $messages = [
              'required'=>'Vui lòng nhập :attribute',
@@ -39,16 +41,12 @@ class HomeController extends Controller
             'product_name' => 'Tên sản phẩm',
             'product_price' => 'Giá sản phẩm'
         ];
-        $validation=Validator::make($input, $rules, $messages,$attributes);
-//        $validation->validate(); // load lâu hơn thì phải?
-        if ($validation->fails()){ // không có sự chuyển hướng trang
-            $validation->errors()->add('msg', 'Vui lòng kiểm tra lại dữ liệu đã nhập!');
-//            return 'Validate Thất Bại';
+        $validator = Validator::make($input,$rules,$messages,$attributes);
+        if ($validator->fails()){
+            $validator->errors()->add('msg', 'Vui lòng kiểm tra lại dữ liệu đã nhập!');
+        } else {
+            return redirect()->route('product')->with('msg', 'Validate Thành Công')->with('type', 'info');
         }
-        return back()->withErrors($validation);
-        /**
-         * ?  $input: là mảng dữ liệu chứa các dữ liệu cần validation ( thường truyền $request->all() )
-         * ?  $attributes: là mảng chứa các tên trường (có thể bỏ trống)
-        */
+        return back()->withErrors($validator);
     }
 }

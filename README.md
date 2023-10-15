@@ -138,3 +138,9 @@ $request->validate([
 ]);
 ```
 5. Custom $message trong lang khi dùng trans() : ___\vendor\laravel\framework\src\Illuminate\Translation\lang\en\validation.php___
+
+## DATABASE Laravel
+### 3 phương thức truy vấn DB laravel
++ #### Truy vấn SQL thuần
++ #### Query Builder 
++ #### Eloquent ORM
