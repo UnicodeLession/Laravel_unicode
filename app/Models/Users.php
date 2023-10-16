@@ -13,13 +13,23 @@ class Users extends Model
     protected $table ='users';
     function getAllUsers()
     {
-        $users =  DB::select('SELECT * FROM users ORDER BY create_at DESC ');
+        $users =  DB::select('SELECT * FROM '.$this->table.' ORDER BY create_at DESC ');
         return $users;
     }
 
     function addUser($data)
     {
-        $data = $data;
-        DB::insert('INSERT INTO users (name, email, create_at) values (?, ?, ?)', $data);
+        DB::insert('INSERT INTO '.$this->table.' (name, email, create_at) values (?, ?, ?)', $data);
+    }
+
+    function getDetail($id)
+    {
+        return DB::select('SELECT * FROM '.$this->table.' where id = ?', [$id]);
+    }
+
+    function updateUser($data,$id)
+    {
+        $data = array_merge($data,[$id]);
+        return DB::update('UPDATE '.$this->table.' SET name =?, email=?, update_at=? where id = ?', $data);
     }
 }
