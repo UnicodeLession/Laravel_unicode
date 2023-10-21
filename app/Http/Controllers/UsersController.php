@@ -47,9 +47,9 @@ class UsersController extends Controller
             date('Y-m-d H:i:s')
         ];
         $this->users->addUser($dataInsert);
-        return redirect(route('users.index'))->with('msg', 'Thêm người dùng thành công');
+        return redirect(route('users.index'))
+            ->with('msg', 'Thêm người dùng thành công')->with('type', 'success');
     }
-
     function getEdit(Request $request,$id = 0)
     {
         $title = 'Cập Nhật Người Dùng';
@@ -60,10 +60,14 @@ class UsersController extends Controller
                 $request->session()->put('id', $id);
 
                 $userDetail = $userDetail[0];
-            };
+            }else {
+                return redirect()->route('users.index')
+                    ->with('msg', 'Người Dùng Không Tồn Tại')
+                    ->with('type', 'danger');
+            }
         } else {
             return redirect()->route('users.index')
-                ->with('msg', 'Người Dùng Không Tồn Tại')
+                ->with('msg', 'Liên Kết Không Tồn Tại')
                 ->with('type', 'danger');
         }
         return view('clients.users.edit', compact('title', 'userDetail'));
@@ -96,5 +100,30 @@ class UsersController extends Controller
             ->with('type', 'success')
             ->withInput();
         // redirect()->route('users.index', ['id'=>$id]) = back()
+    }
+
+    function delete(Request $request, $id)
+    {
+        if (!empty($id)) {
+            $userDetail = $this->users->getDetail($id);
+            if (!empty($userDetail[0])) {
+                $deleteStatus =$this->users->deleteUser($id);
+                if ($deleteStatus){
+                     $msg = 'Xóa Người Dùng Thành Công!';
+                    return redirect()->route('users.index')
+                        ->with('msg', $msg)
+                        ->with('type', 'success');
+                }else{
+                    $msg = 'Bạn Không Thể Xóa Người Dùng Lúc Này. Vui Lòng Thử Lại Sau!';
+                }
+            }else {
+                $msg = 'Người Dùng Không Tồn Tại';
+            }
+        } else {
+            $msg = 'Liên Kết Không Tồn Tại';
+        }
+        return redirect()->route('users.index')
+            ->with('msg', $msg)
+            ->with('type', 'danger');
     }
 }

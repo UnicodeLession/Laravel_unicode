@@ -32,4 +32,14 @@ class Users extends Model
         $data = array_merge($data,[$id]);
         return DB::update('UPDATE '.$this->table.' SET name =?, email=?, update_at=? where id = ?', $data);
     }
+    function deleteUser($id)
+    {
+        return DB::delete("DELETE FROM $this->table WHERE id=?", [$id]);
+    }
+
+    function statementUser($sql)
+    {
+        // thực thi tất cả câu lệnh sql nào
+        return DB::statement($sql);
+    }
 }
