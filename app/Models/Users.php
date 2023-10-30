@@ -11,9 +11,43 @@ class Users extends Model
 {
     use HasFactory;
     protected $table ='users';
-    function getAllUsers()
+
+    function updateGroupId()
     {
-        $users =  DB::select('SELECT * FROM '.$this->table.' ORDER BY create_at DESC ');
+        $check = DB::table($this->table)
+            ->whereNull('group_id')->get();
+        if(!empty($check)){
+            DB::table($this->table)->whereNull('group_id')->update(['group_id'=>1]);
+        };
+    }
+
+    function getAllUsers($filter, $keywords, $sortArr = null)
+    {
+//        $users =  DB::select('SELECT * FROM '.$this->table.' ORDER BY create_at DESC ');
+        $users = DB::table($this->table)
+            ->select('users.*', 'groups.name as group_name')
+            ->leftJoin('groups', 'users.group_id', '=', 'groups.id');
+        $orderBy = 'users.create_at';
+        $orderType = 'desc';
+        if(!empty($sortArr) && is_array($sortArr)){
+            if(!empty($sortArr['sortBy'] && !empty($sortArr['sortType']))){
+                $orderBy = $sortArr['sortBy'];
+                $orderType = $sortArr['sortType'];
+            }
+        }
+        $users = $users->orderBy($orderBy, $orderType);
+        if (!empty($filter)){
+            $users = $users->where($filter);
+        }
+
+        if (!empty($keywords)){
+            $users = $users->where(function ($query) use ($keywords){
+                $query->orWhere('users.name', 'like', '%'.$keywords.'%');
+                $query->orWhere('email', 'like', '%'.$keywords.'%');
+            });
+        }
+        $users = $users->get();
+
         return $users;
     }
 
@@ -41,5 +75,22 @@ class Users extends Model
     {
         // thực thi tất cả câu lệnh sql nào
         return DB::statement($sql);
+    }
+    // start Query Builder
+    function learnQueryBuilder()
+    {
+        // lấy all bản ghi của table
+        $list = DB::table($this->table)
+            ->select('name as hovaten','email', 'id')
+            ->where([['id', '>=', '2'], ['id', '<', '7']]) // lấy 2<= id < 7
+            ->orWhere('id', 7) // lấy thêm id=7
+            ->get(); // dd($list[0]->email);
+        // lấy 1 bản ghi đầu tiên( lấy thông tin trực tiếp )
+        $detail = DB::table($this->table)
+            ->first(); // dd($detail->email);
+        $list = DB::table($this->table)
+            ->join('groups', 'users.group_id', '=', 'groups.id')
+            ->select('users.*', 'groups.name as group_name')
+            ->get();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Users;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -13,14 +14,52 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->users = new Users();
-
+        $this->users->updateGroupId();
     }
 
-    function index()
+    function index(Request $request)
     {
         $title = "Danh Sách Người Dùng";
-        $usersList = $this->users->getAllUsers();
-        return view('clients.users.lists', compact('title', 'usersList'));
+
+//        $this->users->learnQueryBuilder();
+
+        $filter = [];
+        $keywords = null;
+        if (!empty($request->status)){
+            $status = $request->status;
+            if ($status == 'active'){
+                $status = 1;
+            }else{
+                $status = 0;
+            };
+            $filter[] = ['users.status', '=', $status];
+        }
+        if (!empty($request->group_id)){
+            $groupId = $request->group_id;
+            $filter[] = ['users.group_id', '=', $groupId];
+        }
+        if (!empty($request->keywords)){
+            $keywords = $request->keywords;
+        }
+
+        $sortBy = $request->input('sort-by');
+        $sortType = $request->input('sort-type');
+        $allowType = ['asc', 'desc'];
+        if(!empty($sortType) && in_array($sortType, $allowType)){
+            if($sortType=='desc'){
+                $sortType= 'asc';
+            }else {
+                $sortType= 'desc';
+            }
+        }else{
+            $sortType = 'asc';
+        }
+        $sortArr = [
+            'sortBy' => $sortBy,
+            'sortType' => $sortType
+        ];
+        $usersList = $this->users->getAllUsers($filter, $keywords, $sortArr );
+        return view('clients.users.lists', compact('title', 'usersList',  'sortType'));
     }
 
     function add()
