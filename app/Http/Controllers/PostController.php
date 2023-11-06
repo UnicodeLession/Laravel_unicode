@@ -55,4 +55,27 @@ class PostController extends Controller
         ], $dataInsert);
 //        dd($post);
     }
+
+    function update($id)
+    {
+        // tạo đối tượng bản ghi hiện tại
+        $post = Post::find($id);
+        // Cách 1:
+//        $post->title = 'Bài Viết '.$id.' sau khi update';
+//        $post->content= 'Nội dung bài viết '.$id.' sau khi update';
+//        $post->status = 1;
+//        $post->save();
+        // Cách 2:
+        $dataUpdate = [
+            'title' => 'Bài Viết '.$id.' sau khi update',
+            'content' => 'Nội dung bài viết '.$id.' sau khi update',
+            'status' => 1
+        ];
+//        $status = $post->update($dataUpdate);
+//        $status = Post::where('id', '=', $id)->update($dataUpdate);
+        // Cách 3: Nếu Tìm thấy phù hợp query thì update không thì Create
+        Post::updateOrCreate([
+            'id' => $id
+        ],$dataUpdate);
+    }
 }
