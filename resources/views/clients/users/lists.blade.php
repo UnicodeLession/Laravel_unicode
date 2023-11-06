@@ -12,7 +12,6 @@
     <h1>{{ $title }}</h1>
     <a href="{{route('users.add')}}" class="btn btn-primary">Thêm Người dùng</a>
     <hr>
-
     <form action="" method="get" class="mb-3">
         <div class="row">
             <div class="col-3">

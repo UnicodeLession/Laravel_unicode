@@ -142,5 +142,74 @@ $request->validate([
 ## DATABASE Laravel
 ### 3 phương thức truy vấn DB laravel
 + #### Truy vấn SQL thuần
-+ #### Query Builder 
+  + #### Query Builder 
+    + ```php
+      DB::table('table_name')->get() // lấy ra all dữ liệu của bảng
+      DB::table('table_name')->first() // lấy ra 1 bản ghi đầu tiên dữ liệu của bảng
+    + ```php
+      // https://laravel.com/docs/10.x/queries#additional-where-clauses
+      // https://www.w3schools.com/sql/sql_where.asp
+
+      DB::table('table_name')->where('column', 'compare', 'value')
+      //compare: '>' ; '<' ; '>=' ; '<=' ; '!=' | nếu không có thì sẽ là '=' | compare: '<>' = khác
+      // 2 cái dưới giống nhau và dạng (WHERE ... AND ...)
+      ->where('id', '>=', '2') -> where('id', '<', '7')
+      ->where([['id', '>=', '2'], ['id', '<', '7']])
+      
+      ->orWhere('id', 7) // WHERE ... OR id = 7 => lấy thêm id = 7
+      ->whereIn('id', [1,2,3]) // rút gọn của một đống or
+      
+      // câu lệnh tìm kiếm - pattern: https://www.w3schools.com/sql/sql_like.asp
+      ->where('column', 'like', 'pattern')
+      
+      // truy vấn trong khoảng
+      ->whereBetween('id', [2, 7])
+      // truy vấn ngoài khoảng
+      ->whereNotBetween('id', [2, 7])
+    + ```php
+      DB::table('table_name')
+    + ```php
+      //! debug 
+      DB::table('table_name')->...->toSql() // lấy ra câu lệnh sql
+      
+      // thêm câu lệnh vào trên cùng function
+      DB::enableQueryLog();
+      // show sql, bindings, time_:
+      dd(DB::getQueryLog);
+    
+    + ```php
+      //Nối bảng
+      
+      //inner join : có group_id thì mới render
+      DB::table($this->table)
+        ->join('groups', 'users.group_id', '=', 'groups.id')
+        ->select('users.*', 'groups.name as group_name')
+      // khi đó sẽ trả về tất cả của users cùng với group.name mà trong users.group_id khác null
+      
+      //left join: bảng bên trái(users) render ra hết mặc kệ có giá trị nối(group_id) hay không
+      DB::table($this->table)
+        ->leftJoin('groups', 'users.group_id', '=', 'groups.id')
+        ->select('users.*', 'groups.name as group_name')
+      
+      //right join: bảng bên phải(groups) render ra hết mặc kệ có giá trị nối (group_id) hay không
+      DB::table($this->table)
+        ->rightJoin('groups', 'users.group_id', '=', 'groups.id')
+        ->select('users.*', 'groups.name as group_name')
+    + ```php 
+      //Sắp xếp
+      
+      //sắp xếp 1 cột
+      DB::table('users')
+        ->orderBy('name', 'desc')
+      
+      //sắp xếp nhiều cột
+      DB::table('users')
+        ->orderBy('name', 'desc')
+        ->orderBy('email', 'asc')
+      
+      //sắp xếp ngẫu nhiên
+      DB::table('users')
+        ->inRandomOrder()
+    + ```php
+      
 + #### Eloquent ORM
