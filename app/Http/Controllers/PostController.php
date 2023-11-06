@@ -28,6 +28,9 @@ class PostController extends Controller
 //            }
 //            echo "Kết thúc Chunk "."<br />";
 //        });
+        $title = 'Danh sách các bài viết';
+        $allPosts = Post::all();
+        return view('clients.posts.lists', compact('title','allPosts' ));
     }
 
     function add()
@@ -77,5 +80,31 @@ class PostController extends Controller
         Post::updateOrCreate([
             'id' => $id
         ],$dataUpdate);
+    }
+    function delete($id){
+//        $status = Post::destroy($id); // xóa hoàn toàn khỏi DB
+        $idCollect = collect([15, 16, 17]);
+        dd($idCollect);
+    }
+    function handleDeleteAny(Request $request){
+        $deleteArr = $request->delete; // lấy ra các id muốn xóa
+        if(!empty($deleteArr)){
+            // xử lý xóa do có dữ liệu
+            $status = Post::destroy($deleteArr);
+            if ($status) {
+                $msg = 'Xóa '.count($deleteArr).' bài viết thành công!';
+                $type = 'success';
+            }else{
+                $msg = "Bạn Không Không Thể Xóa Lúc Này! Vui Lòng Thử Lại Sau!";
+                $type = 'danger';
+            }
+        } else {
+            $msg = "Vui Lòng Chọn Bài Viết Bạn Muốn Xóa!";
+            $type = 'danger';
+        }
+        return redirect()
+            ->route('posts.index')
+            ->with('msg', $msg)
+            ->with('type', $type);
     }
 }
