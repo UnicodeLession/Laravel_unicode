@@ -43,4 +43,7 @@ Route::prefix('posts')->name('posts.')->group(function (){
     Route::get('/update/{id}', [PostController::class, 'update'])->name('update');
     Route::get('/delete/{id}', [PostController::class, 'delete'])->name('delete');
     Route::post('/delete-any', [PostController::class, 'handleDeleteAny'])->name('delete-any');
+    Route::get('/restore/{id}', [PostController::class, 'restore'])->name('restore');
+    Route::get('/force-delete/{id}', [PostController::class, 'forceDelete'])->name('force-delete');
+
 });

@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+    // xóa mềm : thêm thời gian vào field deleted_at và sẽ lọc tất cả dữ liệu với deleted_at = null
     /**
      *Cấu hình tên table
      * Mặc định khi tạo Model trong Laravel, tên table sẽ được quy ước mặc định theo cú pháp sau:

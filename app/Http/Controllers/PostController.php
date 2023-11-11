@@ -29,7 +29,10 @@ class PostController extends Controller
 //            echo "Kết thúc Chunk "."<br />";
 //        });
         $title = 'Danh sách các bài viết';
-        $allPosts = Post::all();
+        $allPosts = Post::withTrashed()
+            ->orderBy('deleted_at', 'ASC')
+            ->orderBy('id', 'DESC')
+            ->get();
         return view('clients.posts.lists', compact('title','allPosts' ));
     }
 
@@ -106,5 +109,29 @@ class PostController extends Controller
             ->route('posts.index')
             ->with('msg', $msg)
             ->with('type', $type);
+    }
+    function restore($id){
+        $post = Post::onlyTrashed()->where('id', '=', $id)->first();
+        if (!empty($post)){
+            $post->restore();
+            return redirect()->route('posts.index')
+                ->with('msg', 'Khôi phục bài viết thành công!')
+                ->with('type', 'success');
+        }
+        return redirect()->route('posts.index')
+            ->with('msg', 'Bài viết không tồn tại!')
+            ->with('type', 'danger');
+    }
+    function forceDelete($id){
+        $post = Post::onlyTrashed()->where('id', '=', $id)->first();
+        if (!empty($post)){
+            $post->forceDelete();
+            return redirect()->route('posts.index')
+                ->with('msg', 'Xóa vĩnh viễn bài viết thành công!')
+                ->with('type', 'success');
+        }
+        return redirect()->route('posts.index')
+            ->with('msg', 'Bài viết không tồn tại!')
+            ->with('type', 'danger');
     }
 }
