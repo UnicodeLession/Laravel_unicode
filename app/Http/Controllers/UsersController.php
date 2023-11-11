@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Phone;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Models\Users;
+
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+
 
 class UsersController extends Controller
 {
@@ -164,5 +167,22 @@ class UsersController extends Controller
         return redirect()->route('users.index')
             ->with('msg', $msg)
             ->with('type', 'danger');
+    }
+
+    function relations()
+    {
+        // từ user tìm ra sdt
+        $phone = Users::find(4)->phone; // lấy ra phone Model
+        $idPhone = $phone->id;
+        $phoneNumber = $phone->phone;
+//        dd($phone);
+//        dd($idPhone.' và '.$phoneNumber);
+
+        $phone = Users::find(4)->phone(); // sẽ có sự khác biệt
+//        dd($phone);
+
+        // từ phone tìm ra user
+        $user = Phone::where('phone', '0377467432')->first()->user;
+        dd($user);
     }
 }

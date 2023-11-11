@@ -12,6 +12,16 @@ class Users extends Model
     use HasFactory;
     protected $table ='users';
 
+    function phone()
+    {
+        // set up relationship 1-1 và từ user truy tìm đến phone
+        return $this->hasOne(
+            Phone::class, // tham số đầu tiên là bảng có relationship
+            'user_id', // này của table phone
+            'id' // này là của table users
+        );
+    }
+
     function updateGroupId()
     {
         $check = DB::table($this->table)
