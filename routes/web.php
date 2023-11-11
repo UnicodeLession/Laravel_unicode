@@ -37,7 +37,8 @@ Route::prefix('users')->name('users.')->group(function (){
 
     Route::get('/delete/{id}', [UsersController::class, 'delete'])->name('delete');
 
-    Route::get('/hoc-relation', [UsersController::class, 'relations']);
+    Route::get('/one-one', [UsersController::class, 'oneOne']);
+    Route::get('/one-many', [UsersController::class, 'oneMany']);
 });
 Route::prefix('posts')->name('posts.')->group(function (){
     Route::get('/', [PostController::class, 'index'])->name('index');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Phone;
 use App\Models\User;
 use App\Models\Users;
+use App\Models\Groups;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -169,7 +170,7 @@ class UsersController extends Controller
             ->with('type', 'danger');
     }
 
-    function relations()
+    function oneOne()
     {
         // từ user tìm ra sdt
         $phone = Users::find(4)->phone; // lấy ra phone Model
@@ -184,5 +185,20 @@ class UsersController extends Controller
         // từ phone tìm ra user
         $user = Phone::where('phone', '0377467432')->first()->user;
         dd($user);
+    }
+    function oneMany(){
+        // từ group tìm ra users
+        $users = Groups::find(3)->users;
+        if ($users->count()>0){
+            echo "Danh sách users của nhóm Manager:";
+            echo "<br />";
+            foreach ($users as $user) {
+                echo $user->name;
+                echo "<br />";
+            }
+        }
+        // từ user tìm ra group
+        $group = Users::find(4)->group;
+        dd($group);
     }
 }

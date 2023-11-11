@@ -10,6 +10,15 @@ class Groups extends Model
     use HasFactory;
     protected $table = 'groups';
 
+    public function users()
+    {
+        // quan hệ one to many | 1 group có nhiều users | từ group truy vấn đến users
+        return $this->hasMany(
+            Users::class,
+            'group_id',
+            'id'
+        );
+    }
     function getAll()
     {
         $groups = DB::table($this->table)
@@ -17,4 +26,5 @@ class Groups extends Model
         ->get();
         return $groups;
     }
+
 }

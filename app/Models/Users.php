@@ -22,6 +22,16 @@ class Users extends Model
         );
     }
 
+    function group()
+    {
+        // truy vấn ngược từ user ra group với relationship 1 group-many users
+        return $this->belongsTo(
+            Groups::class,
+            'group_id',
+            'id'
+        );
+
+    }
     function updateGroupId()
     {
         $check = DB::table($this->table)
