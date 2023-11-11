@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Post;
+use App\Models\Posts;
 
 class PostController extends Controller
 {
     //
     function index() {
-        $posts = Post::all(); // trả về các collections
-        $detail = Post::find(1); // meythod ->find($key) sẽ tìm giá trị $key trong field có primary_key của db
+        $posts = Posts::all(); // trả về các collections
+        $detail = Posts::find(1); // meythod ->find($key) sẽ tìm giá trị $key trong field có primary_key của db
         $posts = $posts->reject(function ($post) {
             return $post->status==1; // boolean
             // hiểu rằng nó sẽ từ chối các collection có status là 1 -> ra null và ra 0
@@ -22,14 +22,14 @@ class PostController extends Controller
          *      xử lý dữ liệu lớn -> chunk tiết kiệm memory với việc chia nhỏ các dữ liệu ra
          *      ở dưới "2" có nghĩa là nó sẽ chia tất cả dữ liệu thành từng cặp 2 một
          */
-//        Post::chunk(2, function ($posts) {
+//        Posts::chunk(2, function ($posts) {
 //            foreach ($posts as $post) {
 //                echo $post->title. "<br>";
 //            }
 //            echo "Kết thúc Chunk "."<br />";
 //        });
         $title = 'Danh sách các bài viết';
-        $allPosts = Post::withTrashed()
+        $allPosts = Posts::withTrashed()
             ->orderBy('deleted_at', 'ASC')
             ->orderBy('id', 'DESC')
             ->get();
@@ -47,16 +47,16 @@ class PostController extends Controller
         //! Insert dữ liệu
 
         // dùng query builder
-        $insertStatus = Post::insert($dataInsert); // trả về true và false
+        $insertStatus = Posts::insert($dataInsert); // trả về true và false
         // dùng query khác
-        $post = Post::create($dataInsert); // insert data
+        $post = Posts::create($dataInsert); // insert data
         $lastInsertId = $post->id;
         /**
          * Phương thức firstOrCreate() chia làm 2 trường hợp
          *      - lấy ra bản ghi đầu tiên của dữ liệu phù hợp với query
          *      - nếu không có data phù hợp với query thì sẽ insert data và trả về bản ghi đó
          */
-        $post = Post::firstOrCreate([
+        $post = Posts::firstOrCreate([
             'id'=> 2
         ], $dataInsert);
 //        dd($post);
@@ -65,7 +65,7 @@ class PostController extends Controller
     function update($id)
     {
         // tạo đối tượng bản ghi hiện tại
-        $post = Post::find($id);
+        $post = Posts::find($id);
         // Cách 1:
 //        $post->title = 'Bài Viết '.$id.' sau khi update';
 //        $post->content= 'Nội dung bài viết '.$id.' sau khi update';
@@ -78,14 +78,14 @@ class PostController extends Controller
             'status' => 1
         ];
 //        $status = $post->update($dataUpdate);
-//        $status = Post::where('id', '=', $id)->update($dataUpdate);
+//        $status = Posts::where('id', '=', $id)->update($dataUpdate);
         // Cách 3: Nếu Tìm thấy phù hợp query thì update không thì Create
-        Post::updateOrCreate([
+        Posts::updateOrCreate([
             'id' => $id
         ],$dataUpdate);
     }
     function delete($id){
-//        $status = Post::destroy($id); // xóa hoàn toàn khỏi DB
+//        $status = Posts::destroy($id); // xóa hoàn toàn khỏi DB
         $idCollect = collect([15, 16, 17]);
         dd($idCollect);
     }
@@ -93,7 +93,7 @@ class PostController extends Controller
         $deleteArr = $request->delete; // lấy ra các id muốn xóa
         if(!empty($deleteArr)){
             // xử lý xóa do có dữ liệu
-            $status = Post::destroy($deleteArr);
+            $status = Posts::destroy($deleteArr);
             if ($status) {
                 $msg = 'Xóa '.count($deleteArr).' bài viết thành công!';
                 $type = 'success';
@@ -111,7 +111,7 @@ class PostController extends Controller
             ->with('type', $type);
     }
     function restore($id){
-        $post = Post::onlyTrashed()->where('id', '=', $id)->first();
+        $post = Posts::onlyTrashed()->where('id', '=', $id)->first();
         if (!empty($post)){
             $post->restore();
             return redirect()->route('posts.index')
@@ -123,7 +123,7 @@ class PostController extends Controller
             ->with('type', 'danger');
     }
     function forceDelete($id){
-        $post = Post::onlyTrashed()->where('id', '=', $id)->first();
+        $post = Posts::onlyTrashed()->where('id', '=', $id)->first();
         if (!empty($post)){
             $post->forceDelete();
             return redirect()->route('posts.index')
