@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CarsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,5 +49,7 @@ Route::prefix('posts')->name('posts.')->group(function (){
     Route::post('/delete-any', [PostController::class, 'handleDeleteAny'])->name('delete-any');
     Route::get('/restore/{id}', [PostController::class, 'restore'])->name('restore');
     Route::get('/force-delete/{id}', [PostController::class, 'forceDelete'])->name('force-delete');
-
+});
+Route::prefix('cars')->name('cars.')->group(function (){
+    Route::get('/', [CarsController::class, 'index'])->name('index');
 });
