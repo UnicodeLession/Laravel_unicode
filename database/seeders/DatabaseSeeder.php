@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         // Cách 2: gọi câu lệnh tổng hợp `php artisan db:seed`
         $this->call(UsersSeeder::class);
         $this->call(GroupsSeeder::class);
+        $this->call(PostsSeeder::class);
     }
 }
