@@ -30,6 +30,10 @@ php artisan key:generate
 php artisan migrate
 ```
 => check db và sẽ tạo table users... trong db đó
++ Laravel cho phép thay đổi các tham số trong dạng cột, tên cột,... để thực hiện phải cài : ``
+```diff
+composer require doctrine/dbal 
+```
 5. chế độ bảo trì
 ```diff
 php artisan down
