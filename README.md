@@ -214,4 +214,12 @@ $request->validate([
         ->inRandomOrder()
     + ```php
       
-+ #### Eloquent ORM
++ #### Migration
++ Trong table migrations thì batch là sau khi refresh thì lần khởi tạo `php artisan migrate` thì batch sẽ là 1 và các lần khởi tạo tiếp theo thì sẽ lần lượt tăng 
++ rollback về migrate thứ mấy:
+  + mở bảng migrations trong db
+  + xác định batch muốn rollback về
+  + với các migration chung 1 giá trị batch thì có bao nhiêu migration thì có bấy nhiêu __bước__
+    + `php artisan migrate:rollback --step=3`
+    + với lấy rollback step = 3  sẽ lấy batch to nhất rồi đến cái __bước__ cuối cùng của batch đó 
+    + rồi sau khi rollback thì nó sẽ quay trở lại 3 bước có thể hiểu là sẽ mất đi 3 migrations
