@@ -1,8 +1,11 @@
 ## Tạo mới project laravel
 
 ##  Start Server
-```diff
+```terminal
 php artisan serve
+```
+```terminal
+npm run dev
 ```
 
 ## Set up
@@ -26,20 +29,20 @@ php artisan key:generate
   APP_DEBUG=__true__ : khi code thì để true  
   APP_DEBUG=__false__ : deploy thì để false
 4. Database
-```diff
+```terminal
 php artisan migrate
 ```
 => check db và sẽ tạo table users... trong db đó
 + Laravel cho phép thay đổi các tham số trong dạng cột, tên cột,... để thực hiện phải cài : ``
-```diff
+```terminal
 composer require doctrine/dbal 
 ```
 5. chế độ bảo trì
-```diff
+```terminal
 php artisan down
 ```
 6. chuyển về chế độ bình thường
-```diff
+```terminal
 php artisan up
 ```
 
@@ -50,7 +53,7 @@ dd($variable)
 ```
 thì cái #messages: array:2 [▶] gọi là [Collections](https://laravel.com/docs/10.x/collections)
 1. tạo middleware 
-```angular2html
+```terminal
 php artisan make:middleware MiddelwareName 
 ```
 - sẽ tạo file trong ___app/http/Middleware___
@@ -58,16 +61,16 @@ php artisan make:middleware MiddelwareName
 - thường áp dụng trong route group để khi truy cập vào con của group thì sẽ chuyển về middleware route đã khai báo
 
 2. Tạo Controller
-```angular2html
+```terminal
 php artisan make:controller HomeController
 ```
 - sẽ tạo file trong ___app/http/Controller___
-```angular2html
+```terminal
 php artisan make:controller Admin/ProductsController --resource
 ```
 - Tạo ra Controller và dựng sẵn kiểu
 3. Tạo Component
-```angular2html
+```terminal
 php artisan make:component Alert
 ```
 - sẽ tạo file Alert.php trong ___app/View/Components___
@@ -132,7 +135,7 @@ $validation=Validator::make($input, $rules, $messages,$attributes);
 ```
 4. Tạo Rule
 [Create Rule](https://laravel.com/docs/10.x/validation#custom-validation-rules)
-```php
+```terminal
 php artisan make:rule Uppercase
 ```
 to use:
@@ -227,3 +230,25 @@ $request->validate([
     + `php artisan migrate:rollback --step=3`
     + với lấy rollback step = 3  sẽ lấy batch to nhất rồi đến cái __bước__ cuối cùng của batch đó 
     + rồi sau khi rollback thì nó sẽ quay trở lại 3 bước có thể hiểu là sẽ mất đi 3 migrations
+
+## Authentication
++ ### Cài đặt
++ bước 1:
+```terminal
+composer require laravel/ui
+```
++ bước 2:
+```terminal
+php artisan ui bootstrap --auth
+```
++ bước 3:
+```terminal
+npm run dev
+```
+```terminal
+php artisan migrate
+```
++ bước 4: restart laravel
+```terminal
+php artisan serve
+```

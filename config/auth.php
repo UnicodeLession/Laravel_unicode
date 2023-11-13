@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+//        'customer' => [
+//            'driver' => 'session',
+//            'provider' => 'customers',
+//        ],
     ],
 
     /*
@@ -56,14 +60,20 @@ return [
     | be assigned to any extra authentication guards you have defined.
     |
     | Supported: "database", "eloquent"
+    | "eloquent" là khi dùng eloquent truy vấn?
+    | "database" là khi dùng query builder truy vấn?
     |
     */
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
+            'driver' => 'eloquent', // dùng Eloquent
             'model' => App\Models\User::class,
         ],
+//        'customers' => [
+//            'driver' => 'eloquent',
+//            'model' => App\Models\User::class,
+//        ],
 
         // 'users' => [
         //     'driver' => 'database',
