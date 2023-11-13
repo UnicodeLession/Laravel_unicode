@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -18,8 +20,10 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
+    // nếu muốn sửa gì thì phải vào đây rồi copy ném ra ngoài rồi sửa\
     use AuthenticatesUsers;
+
+    // Dùng cả email và username
 
     /**
      * Where to redirect users after login.
@@ -27,7 +31,6 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-
     /**
      * Create a new controller instance.
      *
@@ -36,5 +39,33 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string|min:6',
+        ],[
+            $this->username().'.required' => 'Please enter username or email',
+            'password.required' => 'Please enter password',
+        ]);
+    }
+    public function username()
+    {
+        return 'username';
+    }
+    protected function credentials(Request $request) // tên func là thông tin xác thực
+    {
+        // làm vậy để chấp nhận cả username và email login
+        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)){
+            $fieldDb = 'email';
+        } else {
+            $fieldDb = 'username';
+        }
+        $dataArr = [
+            $fieldDb => $request->username,
+            'password' => $request->password,
+        ];
+        return $dataArr;
     }
 }

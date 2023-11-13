@@ -179,15 +179,27 @@ class UsersSeeder extends Seeder
                 'name' => 'Nguyễn Minh Hiếu',
                 'email'=> 'hieunm3103@gmail.com',
                 'group_id' => 1,
-                'password' => Hash::make('12345678'),
+                'password' => Hash::make('111111'),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+        $check = DB::table('users')->where('email', 'admin@gmail.com')->count();
+        if (!$check){
+            DB::table('users')->insert([
+                'name' => 'Administrator',
+                'username' => 'admin',
+                'email'=> 'admin@gmail.com',
+                'group_id' => 1,
+                'password' => Hash::make('111111'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
         }
         // tạo  20 bản ghi users
         $count = DB::table('users')->count();
-        if ($count<5){
-            for ($i = 0; $i < 20; $i++) {
+        if ($count<1){
+            for ($i = 0; $i < 2; $i++) {
                 DB::table('users')->insert([
                     'name' => $this->randomName(),
                     'email'=> $this->generateEmailAddress(10, 10),
