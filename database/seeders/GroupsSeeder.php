@@ -16,15 +16,22 @@ class GroupsSeeder extends Seeder
     public function run(): void
     {
         //
-        DB::table('groups_after_rename')->insert([
-            'name' => 'Administrator',
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
-        DB::table('groups_after_rename')->insert([
-            'name' => 'Facebook',
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
+        $admin = DB::table('groups')->where('name', 'Administrator')->count();
+        $facebook = DB::table('groups')->where('name', 'Facebook')->count();
+        if ($admin){
+            DB::table('groups')->insert([
+                'name' => 'Administrator',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+        if ($facebook){
+            DB::table('groups')->insert([
+                'name' => 'Facebook',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         // sau khi chạy migration
-        Schema::rename('groups', 'groups_after_rename');
+        Schema::rename('groups_after_rename', 'groups');
     }
 
     /**
@@ -21,7 +21,7 @@ return new class extends Migration
     public function down(): void
     {
         // nếu rollback thì làm gì
-        Schema::rename('groups_after_rename', 'groups');
+        Schema::rename('groups', 'groups_after_rename');
 
     }
 };
