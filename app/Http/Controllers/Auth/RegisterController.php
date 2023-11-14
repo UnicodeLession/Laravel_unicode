@@ -59,7 +59,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'min:5', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:1'],
+            'password' => ['required', 'string', 'min:6'],
             'password_confirmation' => ['required', 'same:password'],
         ],[
             'required'=>'Please enter :attribute ',
