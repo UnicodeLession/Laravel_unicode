@@ -5,9 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('ĐĂNG NHẬP HỆ THỐNG') }}</div>
+                <div class="card-header">{{ __('LOGIN') }}</div>
 
                 <div class="card-body">
+                    @if(session('msg'))
+                        <div class="alert alert-{{session('type')}} text-center">
+                            {{session('msg')}}
+                        </div>
+                    @endif
                     @if($errors->any())
                         <div class="alert alert-danger text-center">
                                 Đã có lỗi. Vui lòng kiểm tra dữ liệu đã nhập
