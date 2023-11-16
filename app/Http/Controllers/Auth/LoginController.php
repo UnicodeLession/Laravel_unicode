@@ -41,6 +41,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // sau khi login thì check xem đã verify email hay chưa nếu chưa thì sẽ
+    // redirect đến route('verification.notice') còn nếu đã verify rồi thì sẽ direct đến Home
+
 // sau khi logout
     public function logout(Request $request)
     {
