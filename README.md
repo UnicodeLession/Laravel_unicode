@@ -252,3 +252,4 @@ php artisan migrate
 ```terminal
 php artisan serve
 ```
+* **_Custom Guard_**: Muốn dùng Authetication với nhiều chức vụ khác nhau như: các user vừa là admin vừa là user và mong muốn login admin có thể kế thừa login như user thì phải 
