@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+
+// Doctors
+use App\Http\Controllers\Doctors\IndexController;
+use App\Http\Controllers\Doctors\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,3 +49,12 @@ Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+
+
+// Doctors
+Route::prefix('doctors')->name('doctors.')->group(function(){
+    Route::get('/', [IndexController::class, 'index'])->name('index');
+
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+});
