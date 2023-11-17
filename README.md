@@ -45,7 +45,13 @@ php artisan down
 ```terminal
 php artisan up
 ```
-
+7. Tạo Hàm Helper với autoload:
+b1: Tạo app/Helpers/Functions.php 
+b2: vào composer.json đến "autoload" dưới psr-4 thêm ___"files": ["app/Helpers/Functions.php"]___
+b3: Chạy lệnh dưới
+```terminal
+composer dump-autoload
+```
 ## Các kiểu khác
 0. khi 
 ```php
