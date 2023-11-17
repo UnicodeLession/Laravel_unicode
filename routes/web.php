@@ -55,8 +55,19 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::prefix('doctors')->name('doctors.')->group(function(){
     Route::get('/', [IndexController::class, 'index'])->middleware('auth:doctor')->name('index');
     // middleware('auth:guard_name') để check đăng nhập hay chưa?
+
     Route::get('/login', [LoginController::class, 'showLoginForm'])->middleware('guest:doctor')->name('login');
     // middleware('guest:guard_name') để check đăng nhập hay chưa?
-
     Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+    // logout: khi dùng GET thì có thể set url thành /doctors/logout và thực hiện logout được
+    // khi dùng POST thì phải có form ẩn và sẽ thực hiện logout ở form đó
+//    Route::get('/logout', function (){
+//        Auth::guard('doctor')->logout();
+//        return redirect()->route('doctors.login');
+//    })->middleware('auth:doctor');
+    Route::post('/logout', function (){
+        Auth::guard('doctor')->logout();
+        return redirect()->route('doctors.login');
+    })->middleware('auth:doctor')->name('logout');
 });
