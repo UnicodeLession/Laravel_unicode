@@ -16,10 +16,6 @@ class LoginController extends Controller
     // show login form
     public function showLoginForm()
     {
-        if(Auth::guard('doctor')->check()){
-            $user = Auth::guard('doctor')->user();
-            dd($user);
-        }
         return view('doctors.auth.login');
     }
     protected function validateLogin(Request $request)

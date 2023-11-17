@@ -8,6 +8,6 @@ class IndexController extends Controller
 {
     // để quản lý cả controller Doctors
     function index() {
-        return 'ok';
+        return 'Trang chủ dành cho bác sỹ';
     }
 }

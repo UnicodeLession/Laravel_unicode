@@ -53,8 +53,10 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 // Doctors
 Route::prefix('doctors')->name('doctors.')->group(function(){
-    Route::get('/', [IndexController::class, 'index'])->name('index');
+    Route::get('/', [IndexController::class, 'index'])->middleware('auth:doctor')->name('index');
+    // middleware('auth:guard_name') để check đăng nhập hay chưa?
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->middleware('guest:doctor')->name('login');
+    // middleware('guest:guard_name') để check đăng nhập hay chưa?
 
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login');
 });
