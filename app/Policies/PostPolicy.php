@@ -14,6 +14,6 @@ class PostPolicy
         //
     }
     function add(){
-        return false;
+        return false; // khi chỉnh true thì bên lists posts sẽ hiện lên thẻ a
     }
 }
