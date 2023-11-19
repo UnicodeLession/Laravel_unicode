@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\Posts;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+//Policy
+use App\Policies\PostPolicy;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -21,6 +25,21 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+        // Cách 1: định nghĩa Gate
+//        Gate::define('posts.add', function (User $user, Posts $posts) {
+//            dd($posts);
+//            // xử lý logic để xem người đấy có quyền sửa gì k?
+//            // $user là thông tin user đang login
+//            return true;
+//        });
+        //Cách 2: dùng callback tương tự: Policy <=> Controller; AuthServiceProvider<=>route
+//        Gate::define('posts.add', [PostPolicy::class, 'add']);
+
+        Gate::define('posts.update', function (User $user, Posts $post) {
+            // xử lý logic để xem người đấy có quyền sửa gì k?
+            // $user là thông tin user đang login
+            return $user->id === $post->user_id;
+        });
     }
 }

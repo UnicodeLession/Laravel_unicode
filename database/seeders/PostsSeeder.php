@@ -21,9 +21,10 @@ class PostsSeeder extends Seeder
         $faker = Factory::create();
         $count = DB::table('posts')->count();
         if ($count<3){
-            for ($i = 0; $i < 20; $i++) {
+            for ($i = 0; $i < 5; $i++) {
                 DB::table('posts')->insert([
                     'title' => $faker->sentence(),
+                    'user_id' => 100,
                     'content'=> $faker->paragraph(),
                     'status' => 1,
                     'published_at' => $faker->dateTime(),
