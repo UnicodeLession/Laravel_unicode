@@ -40,14 +40,6 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'doctor' => [
-            'driver' => 'session',
-            'provider' => 'doctors',
-        ],
-//        'customer' => [
-//            'driver' => 'session',
-//            'provider' => 'customers',
-//        ],
     ],
 
     /*
@@ -64,24 +56,14 @@ return [
     | be assigned to any extra authentication guards you have defined.
     |
     | Supported: "database", "eloquent"
-    | "eloquent" là khi dùng eloquent truy vấn?
-    | "database" là khi dùng query builder truy vấn?
     |
     */
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent', // dùng Eloquent
+            'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'doctors' => [
-            'driver' => 'eloquent', // dùng Eloquent
-            'model' => App\Models\Doctor::class,
-        ],
-//        'customers' => [
-//            'driver' => 'eloquent',
-//            'model' => App\Models\User::class,
-//        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -111,12 +93,6 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-        'doctors' => [
-            'provider' => 'doctors',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

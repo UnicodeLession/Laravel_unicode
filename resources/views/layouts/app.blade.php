@@ -51,14 +51,14 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Xin Chào, {{ Auth::user()->name }}
+                                    {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Đăng Xuất') }}
+                                        {{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -76,13 +76,5 @@
             @yield('content')
         </main>
     </div>
-    <footer>
-        <hr />
-        <div class="container">
-            <p class="text-center">Copyright &copy; {{date('Y')}} By
-                <a href="https://www.facebook.com/hieunm3103" target="_blank" style="text-decoration: none">Nguyễn Minh Hiếu</a>
-            </p>
-        </div>
-    </footer>
 </body>
 </html>
