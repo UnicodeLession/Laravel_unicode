@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //Admin
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,7 +47,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(function () {
-    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/', [DashboardController::class, 'index']);
     // Quản Lý Bài Viết
     Route::prefix('posts')->name('posts.')->group(function () {
         Route::get('/', [PostController::class, 'index'])->name('index');

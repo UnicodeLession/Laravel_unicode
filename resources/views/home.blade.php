@@ -13,9 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     {{ __('You are logged in!') }}
                 </div>
+            </div>
+            <div class="mt-3">
+                <a href="/admin" class="btn btn-success btn-sm">Redirect Admin</a>
             </div>
         </div>
     </div>
