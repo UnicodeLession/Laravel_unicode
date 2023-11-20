@@ -67,5 +67,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UsersController::class, 'index'])->name('index');
         Route::get('/add', [UsersController::class, 'add'])->name('add');
+        Route::get('/edit/{user}', [UsersController::class, 'edit'])->name('edit');
+        Route::post('/edit/{user}', [UsersController::class, 'postEdit']);
+        Route::post('/delete/{user}', [UsersController::class, 'postEdit'])->name('delete');
     });
 });
