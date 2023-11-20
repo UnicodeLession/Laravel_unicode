@@ -38,7 +38,7 @@ class UsersController extends Controller
             'email.required' =>'Please enter your email',
             'password.required' => 'Please enter your password',
             'email.email' => 'Email Invalid',
-            'email.unique' => 'The email has already been used',
+            'email.unique' => 'The name has already been taken',
             'group_id.required' => 'Please choose your group'
         ]);
         $user = new User();
@@ -55,12 +55,47 @@ class UsersController extends Controller
     }
     function edit(User $user)
     {
-        return view('admin.users.edit');
+        $groups = Groups::all();
+        return view('admin.users.edit', compact('groups', 'user'));
     }
-    function postEdit(User $user){
-
+    function postEdit(User $user, Request $request){
+        $request->validate([
+            'name' =>'required',
+            'email' =>'required|email|unique:users,email,'.$user->id, // tránh báo lỗi khi trùng với chính nó
+            'group_id' => ['required', function($attribute, $value, $fail) use ($request){
+                if ($value ==0){
+                    $fail('Please choose your group!'); // trong select sẽ có value = 0 thì với Closure này sẽ giúp hiển lỗi khi value trong select bằng 0
+                }
+            }]
+        ],[
+            'name.required' =>'Please enter your name',
+            'email.required' =>'Please enter your email',
+            'email.email' => 'Email Invalid',
+            'email.unique' => 'The email has already been used',
+            'group_id.required' => 'Please choose your group'
+        ]);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if (!empty($request->password)){
+            $user->password = Hash::make($request->password);
+        }
+        $user->group_id = $request->group_id;
+        $user->update();
+        return back()
+            ->with('msg', 'Cập Nhật Người Dùng Thành Công!')
+            ->with('type', 'success');
     }
     function delete(User $user){
-
+        if (Auth::user()->id!==$user->id){
+            // xử lý xóa
+            User::destroy($user->id);
+            return redirect()->route('admin.users.index')
+                ->with('msg', 'Bạn Xóa Tài Khoản Thành Công!')
+                ->with('type', 'success');
+        }
+        return redirect()->route('admin.users.index')
+                ->with('msg', 'Bạn Không Thể Xóa Tài Khoản Đang Đăng Nhập!')
+                ->with('type', 'danger');
     }
 }

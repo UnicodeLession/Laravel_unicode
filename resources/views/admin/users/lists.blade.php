@@ -38,8 +38,10 @@
                             <a href="{{route('admin.users.edit',[$item->id] )}}" class="btn btn-warning btn-sm">Sửa</a>
                         </td>
                         <td>
+{{--                            không được xóa user đang đăng nhập --}}
+                            @if(Auth::user()->id!==$item->id)
                             <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này chứ?')" data-toggle="modal" data-target="#deleteModal" href="{{route('admin.users.delete', [$item->id])}} " class="btn btn-danger btn-sm">Xóa</a>
-
+                            @endif
                         </td>
                     </tr>
                 @endforeach
