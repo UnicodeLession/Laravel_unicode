@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         // thiết lập khóa ngoại
-        Schema::table('users', function (Blueprint $table){
-            $table->foreign('group_id')
+        Schema::table('groups', function (Blueprint $table){
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('groups');
+                ->on('users');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
     public function down(): void
     {
         // xóa khóa ngoại: <table>_<field>_foreign
-        Schema::table('users', function (Blueprint $table){
-            $table->dropForeign('users_group_id_foreign');
+        Schema::table('groups', function (Blueprint $table){
+            $table->dropForeign('groups_user_id_foreign');
         });
     }
 };

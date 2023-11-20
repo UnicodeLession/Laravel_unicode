@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('groups', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('name')->nullable();
+            $table->text('permissions')->nullable(); // chuỗi json phân quyền
+            $table->integer('user_id')->unsigned(); // ai là người được thêm user khác vào
             $table->timestamps();
         });
     }
