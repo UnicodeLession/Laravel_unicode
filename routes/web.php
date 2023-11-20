@@ -6,8 +6,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 //Admin
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\PostsController;
+use App\Http\Controllers\Admin\GroupsController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UsersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,12 +49,23 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+
     // Quản Lý Bài Viết
     Route::prefix('posts')->name('posts.')->group(function () {
-        Route::get('/', [PostController::class, 'index'])->name('index');
-        Route::get('/add', [PostController::class, 'add'])->name('add');
-        Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
+        Route::get('/', [PostsController::class, 'index'])->name('index');
+        Route::get('/add', [PostsController::class, 'add'])->name('add');
+    });
 
+    // Quản Lý Groups
+    Route::prefix('groups')->name('groups.')->group(function () {
+        Route::get('/', [GroupsController::class, 'index'])->name('index');
+        Route::get('/add', [GroupsController::class, 'add'])->name('add');
+    });
+
+    // Quản Lý Users
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [UsersController::class, 'index'])->name('index');
+        Route::get('/add', [UsersController::class, 'add'])->name('add');
     });
 });
