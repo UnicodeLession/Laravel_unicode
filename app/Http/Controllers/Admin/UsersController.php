@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Groups;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +18,7 @@ class UsersController extends Controller
         return view('admin.users.lists', compact('lists'));
     }
     function add(){
-        $groups = Groups::all();
+        $groups = Group::all();
         return view('admin.users.add', compact('groups'));
     }
 
@@ -55,7 +55,7 @@ class UsersController extends Controller
     }
     function edit(User $user)
     {
-        $groups = Groups::all();
+        $groups = Group::all();
         return view('admin.users.edit', compact('groups', 'user'));
     }
     function postEdit(User $user, Request $request){

@@ -45,11 +45,11 @@ class User extends Authenticatable
 
     function group()
     {
-        return $this->belongsTo(Groups::class);
+        return $this->belongsTo(Group::class);
     }
 
     function post()
     {
-        return $this->belongsTo(Posts::class);
+        return $this->belongsTo(Post::class);
     }
 }

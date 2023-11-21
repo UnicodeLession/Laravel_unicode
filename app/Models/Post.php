@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Groups extends Model
+class Post extends Model
 {
     use HasFactory;
-    protected $table = 'groups';
-    function users(){
-        return $this->hasMany(User::class, 'group_id', 'id');
-    }
+    protected $table = 'posts';
 
     function postBy()
     {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Posts;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +12,8 @@ class PostsController extends Controller
     //
     function index()
     {
-        $lists = Posts::orderBy('created_at', 'DESC')->get();
+        $this->authorize('viewAny', Post::class);
+        $lists = Post::orderBy('created_at', 'DESC')->get();
         return view('admin.posts.lists', compact('lists'));
     }
     function add(){
@@ -23,7 +24,7 @@ class PostsController extends Controller
             'title' =>'required',
             'content_post' =>'required'
         ]);
-        $posts = new Posts();
+        $posts = new Post();
         $posts->title = $request->title;
         $posts->content = $request->content_post;
         $posts->user_id = Auth::user()->id;
@@ -32,10 +33,10 @@ class PostsController extends Controller
             ->with('msg', 'Thêm Bài Viết Thành Công!')
             ->with('type', 'success');
     }
-    function edit(Posts $post){
+    function edit(Post $post){
         return view('admin.posts.edit', compact('post'));
     }
-    function postEdit(Posts $post, Request $request){
+    function postEdit(Post $post, Request $request){
         $request->validate([
             'title' =>'required',
             'content_post' =>'required',
@@ -47,8 +48,8 @@ class PostsController extends Controller
             ->with('msg', 'Cập Nhật Bài Viết Thành Công!')
             ->with('type', 'success');
     }
-    function delete(Posts $post){
-        $status = Posts::destroy($post->id);
+    function delete(Post $post){
+        $status = Post::destroy($post->id);
         if ($status){
             return redirect()->route('admin.posts.index')
                 ->with('msg', 'Bạn Xóa Bài Viết Thành Công!')

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Groups;
+use App\Models\Group;
 use App\Models\User;
 use App\Models\Modules;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class GroupsController extends Controller
     //
     function index()
     {
-        $lists = Groups::all();
+        $lists = Group::all();
         return view('admin.groups.lists', compact('lists'));
     }
     function add(){
@@ -27,7 +27,7 @@ class GroupsController extends Controller
         $request->validate([
             'name' =>'required|unique:groups,name',
         ]);
-        $group = new Groups();
+        $group = new Group();
         $group->name = $request->name;
         $group->user_id = Auth::user()->id;
         $group->save();
@@ -35,10 +35,10 @@ class GroupsController extends Controller
             ->with('msg', 'Thêm Nhóm Thành Công!')
             ->with('type', 'success');
     }
-    function edit(Groups $group){
+    function edit(Group $group){
         return view('admin.groups.edit', compact('group'));
     }
-    function postEdit(Groups $group, Request $request){
+    function postEdit(Group $group, Request $request){
         $request->validate([
             'name' =>'required|unique:groups,name',
         ]);
@@ -48,10 +48,10 @@ class GroupsController extends Controller
             ->with('msg', 'Cập Nhật Tên Nhóm Thành Công!')
             ->with('type', 'success');
     }
-    function delete(Groups $group){
+    function delete(Group $group){
         $userCount = $group->users()->count();
         if ($userCount == 0) {
-            Groups::destroy($group->id);
+            Group::destroy($group->id);
             return redirect()->route('admin.groups.index')
                 ->with('msg', 'Bạn Xóa Nhóm Thành Công!')
                 ->with('type', 'success');
@@ -61,7 +61,7 @@ class GroupsController extends Controller
             ->with('type', 'danger');
     }
 
-    function permission(Groups $group)
+    function permission(Group $group)
     {
         $modules = Modules::all();
         $roleListArray = [
@@ -86,7 +86,7 @@ class GroupsController extends Controller
             ));
     }
 
-    function postPermission(Groups $group, Request $request)
+    function postPermission(Group $group, Request $request)
     {
         if (!empty($request->role)){
             $roleArr = $request->role;
