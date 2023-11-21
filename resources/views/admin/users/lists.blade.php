@@ -40,7 +40,8 @@
                         <td>
 {{--                            không được xóa user đang đăng nhập --}}
                             @if(Auth::user()->id!==$item->id)
-                            <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này chứ?')" data-toggle="modal" data-target="#deleteModal" href="{{route('admin.users.delete', [$item->id])}} " class="btn btn-danger btn-sm">Xóa</a>
+                            <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này chứ?')" href="{{route('admin.users.delete', [$item->id])}} " class="btn btn-danger btn-sm">Xóa</a>
+{{--                                data-toggle="modal" data-target="#deleteModal"--}}
                             @endif
                         </td>
                     </tr>

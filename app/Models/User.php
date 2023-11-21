@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Groups::class);
     }
+
+    function post()
+    {
+        return $this->belongsTo(Posts::class);
+    }
 }

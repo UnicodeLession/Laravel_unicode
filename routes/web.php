@@ -55,6 +55,10 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     Route::prefix('posts')->name('posts.')->group(function () {
         Route::get('/', [PostsController::class, 'index'])->name('index');
         Route::get('/add', [PostsController::class, 'add'])->name('add');
+        Route::post('/add', [PostsController::class, 'postAdd']);
+        Route::get('/edit/{post}', [PostsController::class, 'edit'])->name('edit');
+        Route::post('/edit/{post}', [PostsController::class, 'postEdit']);
+        Route::get('/delete/{post}', [PostsController::class, 'delete'])->name('delete');
     });
 
     // Quản Lý Groups
