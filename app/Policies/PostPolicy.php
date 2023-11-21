@@ -49,11 +49,12 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can update the model.\
+     * ai là người đăng bài mới được sửa
      */
     public function update(User $user, Post $post): bool
     {
-        //
+        return $user->id === $post->user_id;
     }
 
     /**

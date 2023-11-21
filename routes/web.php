@@ -65,8 +65,11 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
             ->can('create', Post::class);
         Route::post('/add', [PostsController::class, 'postAdd'])
             ->can('create', Post::class);
-        Route::get('/edit/{post}', [PostsController::class, 'edit'])->name('edit');
-        Route::post('/edit/{post}', [PostsController::class, 'postEdit']);
+        Route::get('/edit/{post}', [PostsController::class, 'edit'])
+            ->name('edit')
+            ->can('posts.edit');
+        Route::post('/edit/{post}', [PostsController::class, 'postEdit'])
+            ->can('posts.edit');
         Route::get('/delete/{post}', [PostsController::class, 'delete'])->name('delete');
     });
 

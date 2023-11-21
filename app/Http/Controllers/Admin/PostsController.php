@@ -12,8 +12,15 @@ class PostsController extends Controller
     //
     function index()
     {
-        $lists = Post::orderBy('created_at', 'DESC')->get();
-        return view('admin.posts.lists', compact('lists'));
+        $userId = Auth::user()->id;
+
+        $postsByMe = Post::orderBy('created_at', 'DESC')
+            ->where('user_id', $userId)
+            ->get();
+        $postsByOther = Post::orderBy('created_at', 'DESC')
+            ->where('user_id', '<>', $userId)
+            ->get();
+        return view('admin.posts.lists', compact('postsByMe', 'postsByOther'));
     }
     function add(){
         return view('admin.posts.add');
@@ -33,9 +40,11 @@ class PostsController extends Controller
             ->with('type', 'success');
     }
     function edit(Post $post){
+        $this->authorize('update', $post);
         return view('admin.posts.edit', compact('post'));
     }
     function postEdit(Post $post, Request $request){
+        $this->authorize('update', $post);
         $request->validate([
             'title' =>'required',
             'content_post' =>'required',

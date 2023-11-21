@@ -17,20 +17,21 @@
     @can('create', App\Models\Post::class)
         <p><a href="{{route('admin.posts.add')}}" class="btn btn-primary btn-sm">Thêm mới</a></p>
     @endcan
-    <table class="table table-bordered">
-        <thead>
+    @if(!empty($postsByMe))
+        <table class="table table-bordered">
+            <thead>
             <tr>
                 <th width="5%">STT</th>
                 <th>Tiêu Đề</th>
-                <th>Người Đăng</th>
+                <th width="25%">Người Đăng</th>
                 <th width="5%">Xem</th>
                 <th width="5%">Sửa</th>
                 <th width="5%">Xóa</th>
             </tr>
-        </thead>
-        <tbody>
-            @if ($lists->count() > 0)
-                @foreach($lists as $key=>$item)
+            </thead>
+            <tbody>
+            @if ($postsByMe->count() > 0)
+                @foreach($postsByMe as $key=>$item)
                     <tr>
                         <td>{{$key + 1}}</td>
                         <td>{{getLimitText($item->title)}}</td>
@@ -39,22 +40,58 @@
                             <a href="#" class="btn btn-primary btn-sm">Xem</a>
                         </td>
                         <td>
-                            <a href="{{route('admin.posts.edit',[$item->id] )}}" class="btn btn-warning btn-sm">Sửa</a>
+                            <a href="{{route('admin.posts.edit',[$item->id] )}}" class="btn btn-warning btn-sm @cannot('posts.edit')  disabled @endcannot">Sửa</a>
                         </td>
                         <td>
                             <a onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này chứ?')" href="{{route('admin.posts.delete', [$item->id])}} " class="btn btn-danger btn-sm">Xóa</a>
+{{--                            @can('posts.delete') disabled  @endcan--}}
                         </td>
                     </tr>
                 @endforeach
             @else
                 <tr>
                     <td colspan="6">
-                        <div class="alert alert-danger text-center">Không có bài viết</div>
+                        <div class="alert alert-danger text-center">Bạn Chưa Đăng Bài Viết Nào!</div>
                     </td>
                 </tr>
             @endif
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    @endif
+    @if(!empty($postsByOther))
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th width="5%">STT</th>
+                <th>Tiêu Đề</th>
+                <th width="25%">Người Đăng</th>
+                <th width="5%">Xem</th>
+                <th width="5%">Sửa</th>
+                <th width="5%">Xóa</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if ($postsByOther->count() > 0)
+                @foreach($postsByOther as $key=>$item)
+                    <tr>
+                        <td>{{$key + 1}}</td>
+                        <td>{{getLimitText($item->title)}}</td>
+                        <td>{{$item->postBy->name}}</td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm">Xem</a>
+                        </td>
+                        <td>
+                            <a href="{{route('admin.posts.edit',[$item->id] )}}" class="btn btn-warning btn-sm disabled">Sửa</a>
+                        </td>
+                        <td>
+                            <a onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này chứ?')" href="{{route('admin.posts.delete', [$item->id])}} " class="btn btn-danger btn-sm disabled">Xóa</a>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
+            </tbody>
+        </table>
+    @endif
 {{--    Làm sao để khi ấn xóa nó sẽ lấy được id thằng xóa và gửi vào hàm route--}}
     <!-- Delete Modal-->
 {{--    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"--}}
