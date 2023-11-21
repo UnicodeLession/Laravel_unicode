@@ -52,5 +52,23 @@ class DatabaseSeeder extends Seeder
                 }
             }
         }
+        DB::table('modules')->insert([
+            'name' => 'users',
+            'title' => 'Quản Lý Người Dùng',
+            'created_at' => $faker->dateTime,
+            'updated_at' => $faker->dateTime,
+        ]);
+        DB::table('modules')->insert([
+            'name' => 'groups',
+            'title' => 'Quản Lý Nhóm',
+            'created_at' => $faker->dateTime,
+            'updated_at' => $faker->dateTime,
+        ]);
+        DB::table('modules')->insert([
+            'name' => 'posts',
+            'title' => 'Quản Lý Bài Viết',
+            'created_at' => $faker->dateTime,
+            'updated_at' => $faker->dateTime,
+        ]);
     }
 }

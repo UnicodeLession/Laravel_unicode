@@ -34,7 +34,7 @@
                         <td>{{$item->name}}</td>
                         <td>{{(!empty($item->postBy->name)) ? $item->postBy->name : false}}</td>
                         <td class="d-flex justify-content-center">
-                            <a href="#" class="btn btn-primary btn-sm">Phân Quyền</a>
+                            <a href="{{route('admin.groups.permission', $item)}}}" class="btn btn-primary btn-sm">Phân Quyền</a>
                         </td>
                         <td >
                             <a href="{{route('admin.groups.edit',[$item->id] )}}" class="btn btn-warning btn-sm">Sửa</a>

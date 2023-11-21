@@ -65,6 +65,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
         Route::get('/edit/{group}', [GroupsController::class, 'edit'])->name('edit');
         Route::post('/edit/{group}', [GroupsController::class, 'postEdit']);
         Route::get('/delete/{group}', [GroupsController::class, 'delete'])->name('delete');
+        Route::get('/permission/{group}', [GroupsController::class, 'permission'])->name('permission');
+        Route::post('/permission/{group}', [GroupsController::class, 'postPermission']);
     });
 
     // Quản Lý Users
