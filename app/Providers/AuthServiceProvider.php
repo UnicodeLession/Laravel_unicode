@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\Posts;
 use App\Models\User;
+use App\Models\Modules;
+use App\Models\Groups;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -26,21 +28,24 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-        // Cách 1: định nghĩa Gate
-//        Gate::define('posts.add', function (User $user, Posts $posts) {
-//            dd($posts);
-//            // xử lý logic để xem người đấy có quyền sửa gì k?
-//            // $user là thông tin user đang login
-//            return true;
-//        });
-        //Cách 2: dùng callback tương tự: Policy <=> Controller; AuthServiceProvider<=>route
-        Gate::define('posts.add', [PostPolicy::class, 'add']);
-
-        Gate::define('posts.update', function (User $user, Posts $post) {
-            // xử lý logic để xem người đấy có quyền sửa gì k?
-            // $user là thông tin user đang login
-            // khi người dùng trùng với id người viết bài thì mới return true và sẽ được phép update
-            return $user->id === $post->user_id;
-        });
+        /**
+         * users.view
+            1. Lấy Danh sách module
+            2.
+        */
+        $moduleList = Modules::all();
+        if($moduleList->count() > 0){
+            foreach ($moduleList as $module) {
+                Gate::define($module->name, function (User $user) use ($module) {
+                    $roleJson = $user->group->permissions;
+                    if(!empty($roleJson)) {
+                        $roleArr = json_decode($roleJson, true);
+                        $check = isRole($roleArr, $module->name);
+                        return $check;
+                    }
+                    return false;
+                });
+            }
+        }
     }
 }

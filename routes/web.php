@@ -52,7 +52,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     // Quản Lý Bài Viết
-    Route::prefix('posts')->name('posts.')->group(function () {
+    Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function () {
         Route::get('/', [PostsController::class, 'index'])->name('index');
         Route::get('/add', [PostsController::class, 'add'])->name('add');
         Route::post('/add', [PostsController::class, 'postAdd']);
@@ -62,7 +62,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     });
 
     // Quản Lý Groups
-    Route::prefix('groups')->name('groups.')->group(function () {
+    Route::prefix('groups')->name('groups.')->middleware('can:groups')->group(function () {
         Route::get('/', [GroupsController::class, 'index'])->name('index');
         Route::get('/add', [GroupsController::class, 'add'])->name('add');
         Route::post('/add', [GroupsController::class, 'postAdd']);
@@ -74,7 +74,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     });
 
     // Quản Lý Users
-    Route::prefix('users')->name('users.')->group(function () {
+    Route::prefix('users')->name('users.')->middleware('can:users')->group(function () {
         Route::get('/', [UsersController::class, 'index'])->name('index');
         Route::get('/add', [UsersController::class, 'add'])->name('add');
         Route::post('/add', [UsersController::class, 'postAdd']);

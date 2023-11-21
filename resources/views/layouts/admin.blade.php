@@ -58,6 +58,7 @@
         </div>
 
         <!-- Nav Item - Posts Menu -->
+        @can('posts')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_posts"
                aria-expanded="true" aria-controls="collapse_posts">
@@ -71,8 +72,9 @@
                 </div>
             </div>
         </li>
-
-        <!-- Nav Item - Posts Menu -->
+        @endcan
+        <!-- Nav Item - Groups Menu -->
+        @can('groups')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_groups"
                aria-expanded="true" aria-controls="collapse_groups">
@@ -86,7 +88,9 @@
                 </div>
             </div>
         </li>
+        @endcan
         <!-- Nav Item - Posts Menu -->
+        @can('users')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_users"
                aria-expanded="true" aria-controls="collapse_users">
@@ -100,6 +104,7 @@
                 </div>
             </div>
         </li>
+        @endcan
         <!-- Divider -->
         <hr class="sidebar-divider">
 
