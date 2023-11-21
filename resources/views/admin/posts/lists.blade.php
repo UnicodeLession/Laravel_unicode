@@ -40,11 +40,13 @@
                             <a href="#" class="btn btn-primary btn-sm">Xem</a>
                         </td>
                         <td>
-                            <a href="{{route('admin.posts.edit',[$item->id] )}}" class="btn btn-warning btn-sm @cannot('posts.edit')  disabled @endcannot">Sửa</a>
+                            <a href="{{route('admin.posts.edit',[$item->id] )}}"
+                               class="btn btn-warning btn-sm @cannot('posts.edit')  disabled @endcannot">Sửa</a>
                         </td>
                         <td>
-                            <a onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này chứ?')" href="{{route('admin.posts.delete', [$item->id])}} " class="btn btn-danger btn-sm">Xóa</a>
-{{--                            @can('posts.delete') disabled  @endcan--}}
+                            <a onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này chứ?')"
+                               href="{{route('admin.posts.delete', [$item->id])}} "
+                               class="btn btn-danger btn-sm @cannot('posts.delete') disabled @endcannot">Xóa</a>
                         </td>
                     </tr>
                 @endforeach

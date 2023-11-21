@@ -70,7 +70,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
             ->can('posts.edit');
         Route::post('/edit/{post}', [PostsController::class, 'postEdit'])
             ->can('posts.edit');
-        Route::get('/delete/{post}', [PostsController::class, 'delete'])->name('delete');
+        Route::get('/delete/{post}', [PostsController::class, 'delete'])->name('delete')
+            ->can('posts.delete');
     });
 
     // Quản Lý Groups

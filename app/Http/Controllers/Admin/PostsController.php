@@ -57,6 +57,7 @@ class PostsController extends Controller
             ->with('type', 'success');
     }
     function delete(Post $post){
+        $this->authorize('delete', $post);
         $status = Post::destroy($post->id);
         if ($status){
             return redirect()->route('admin.posts.index')
