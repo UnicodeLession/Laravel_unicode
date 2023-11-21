@@ -15,14 +15,7 @@ class PostPolicy
      */
     public function viewAny(User $user): bool
     {
-        $roleJson = $user->group->permissions;
-        // cho ai có khả năng xem
-        if(!empty($roleJson)) {
-            $roleArr = json_decode($roleJson, true);
-            $check = isRole($roleArr, 'posts');
-            return $check;
-        }
-        return false;
+        // không thật sự cần?
     }
 
     /**

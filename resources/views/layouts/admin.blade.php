@@ -68,7 +68,10 @@
             <div id="collapse_posts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('admin.posts.index') }}">Danh Sách</a>
+{{--                    nếu phân quyền không được thêm thì không được hiện phần này--}}
+                    @can('create', App\Models\Post::class)
                     <a class="collapse-item" href="{{ route('admin.posts.add') }}">Thêm Bài Viết</a>
+                    @endcan
                 </div>
             </div>
         </li>

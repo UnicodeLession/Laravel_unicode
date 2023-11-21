@@ -58,8 +58,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     // Quản Lý Bài Viết
     Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function () {
         Route::get('/', [PostsController::class, 'index'])
-            ->name('index')
-            ->can('viewAny', Post::class);
+            ->name('index');
         Route::get('/add', [PostsController::class, 'add'])
             ->name('add')
             ->can('create', Post::class);
