@@ -81,7 +81,7 @@ class UsersController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->group_id = $request->group_id;
-        $user->update();
+        User::where('id', '=', $request->id)->update($user->attributesToArray());
         return back()
             ->with('msg', 'Cập Nhật Người Dùng Thành Công!')
             ->with('type', 'success');

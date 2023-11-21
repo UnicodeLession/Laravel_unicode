@@ -64,6 +64,7 @@
             @enderror
         </div>
         @csrf
+        <input type="hidden" name="id" value="{{$user->id}}">
         <button type="submit" class="btn btn-primary btn-sm">Cập Nhật</button>
         <a href="{{route('admin.users.index')}}" class="btn btn-success btn-sm">Quay Lại</a>
     </form>
