@@ -14,47 +14,80 @@
             </div>
         @endif
     </div>
+    @can('create', App\Models\User::class)
     <p><a href="{{route('admin.users.add')}}" class="btn btn-primary btn-sm">Thêm mới</a></p>
-    <table class="table table-bordered">
-        <thead>
+    @endcan
+    @if($usersChange->count() > 0)
+        <table class="table table-bordered">
+            <thead>
             <tr>
                 <th width="5%">STT</th>
-                <th>Tên</th>
-                <th>Email</th>
-                <th>Nhóm</th>
+                <th width="30%">Tên</th>
+                <th width="35%">Email</th>
+                <th width="20&">Nhóm</th>
                 <th width="5%">Sửa</th>
                 <th width="5%">Xóa</th>
             </tr>
-        </thead>
-        <tbody>
-            @if ($lists->count() > 0)
-                @foreach($lists as $key=>$item)
+            </thead>
+            <tbody>
+                @foreach($usersChange as $key=>$item)
                     <tr>
                         <td>{{$key + 1}}</td>
                         <td>{{$item->name}}</td>
                         <td>{{$item->email}}</td>
                         <td>{{$item->group->name}}</td>
                         <td>
-                            <a href="{{route('admin.users.edit',[$item->id] )}}" class="btn btn-warning btn-sm">Sửa</a>
+                            <a href="{{route('admin.users.edit',[$item->id] )}}"
+                               class="btn btn-warning btn-sm @cannot('users.edit') disabled @endcannot"
+                            >Sửa</a>
                         </td>
                         <td>
-{{--                            không được xóa user đang đăng nhập --}}
+                            {{--                            không được xóa user đang đăng nhập --}}
                             @if(Auth::user()->id!==$item->id)
-                            <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này chứ?')" href="{{route('admin.users.delete', [$item->id])}} " class="btn btn-danger btn-sm">Xóa</a>
-{{--                                data-toggle="modal" data-target="#deleteModal"--}}
+                                <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này chứ?')"
+                                   href="{{route('admin.users.delete', [$item->id])}} "
+                                   class="btn btn-danger btn-sm @cannot('users.delete') disabled @endcannot">Xóa</a>
                             @endif
                         </td>
                     </tr>
                 @endforeach
-            @else
-                <tr>
-                    <td colspan="6">
-                        <div class="alert alert-danger text-center">Không có người dùng</div>
-                    </td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    @endif
+    @if($usersNotChange->count() > 0)
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th width="5%">STT</th>
+                <th width="30%">Tên</th>
+                <th width="35%">Email</th>
+                <th width="20&">Nhóm</th>
+                <th width="5%">Sửa</th>
+                <th width="5%">Xóa</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach($usersNotChange as $key=>$item)
+                    <tr>
+                        <td>{{$key + 1}}</td>
+                        <td>{{$item->name}}</td>
+                        <td>{{$item->email}}</td>
+                        <td>{{$item->group->name}}</td>
+                        <td>
+                            <a href="{{route('admin.users.edit',[$item->id] )}}"
+                               class="btn btn-warning btn-sm disabled"
+                            >Sửa</a>
+                        </td>
+                        <td>
+                                <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này chứ?')"
+                                   href="{{route('admin.users.delete', [$item->id])}} "
+                                   class="btn btn-danger btn-sm disabled">Xóa</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 {{--    Làm sao để khi ấn xóa nó sẽ lấy được id thằng xóa và gửi vào hàm route--}}
     <!-- Delete Modal-->
 {{--    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"--}}

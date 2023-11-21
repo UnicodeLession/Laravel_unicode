@@ -7,6 +7,7 @@ use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -14,8 +15,14 @@ class UsersController extends Controller
     //
     function index()
     {
-        $lists = User::all();
-        return view('admin.users.lists', compact('lists'));
+        $userId = Auth::user()->id;
+
+        $usersChange = User::where('user_id', $userId)->orWhere('id', $userId)->get(); // hiển thị tài khoản đang đăng nhập và các tài khoản được tạo bởi tài khoản đang đăng nhập
+        // Lấy tất cả users khác với những users đã lấy ở trên
+        $usersNotChange = User::whereNotIn('id', $usersChange->pluck('id'))
+            ->whereNotIn('user_id', $usersChange->pluck('user_id'))
+            ->get();
+        return view('admin.users.lists', compact('usersChange', 'usersNotChange'));
     }
     function add(){
         $groups = Group::all();
@@ -55,10 +62,12 @@ class UsersController extends Controller
     }
     function edit(User $user)
     {
+        $this->authorize('update', $user);
         $groups = Group::all();
         return view('admin.users.edit', compact('groups', 'user'));
     }
     function postEdit(User $user, Request $request){
+        $this->authorize('update', $user);
         $request->validate([
             'name' =>'required',
             'email' =>'required|email|unique:users,email,'.$user->id, // tránh báo lỗi khi trùng với chính nó
@@ -87,6 +96,7 @@ class UsersController extends Controller
             ->with('type', 'success');
     }
     function delete(User $user){
+        $this->authorize('delete', $user);
         if (Auth::user()->id!==$user->id){
             // xử lý xóa
             User::destroy($user->id);

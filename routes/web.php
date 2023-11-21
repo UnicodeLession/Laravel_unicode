@@ -69,7 +69,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
             ->can('posts.edit');
         Route::post('/edit/{post}', [PostsController::class, 'postEdit'])
             ->can('posts.edit');
-        Route::get('/delete/{post}', [PostsController::class, 'delete'])->name('delete')
+        Route::get('/delete/{post}', [PostsController::class, 'delete'])
+            ->name('delete')
             ->can('posts.delete');
     });
 
@@ -88,10 +89,18 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     // Quản Lý Users
     Route::prefix('users')->name('users.')->middleware('can:users')->group(function () {
         Route::get('/', [UsersController::class, 'index'])->name('index');
-        Route::get('/add', [UsersController::class, 'add'])->name('add');
-        Route::post('/add', [UsersController::class, 'postAdd']);
-        Route::get('/edit/{user}', [UsersController::class, 'edit'])->name('edit');
-        Route::post('/edit/{user}', [UsersController::class, 'postEdit']);
-        Route::get('/delete/{user}', [UsersController::class, 'delete'])->name('delete');
+        Route::get('/add', [UsersController::class, 'add'])
+            ->name('add')
+            ->can('create', User::class);
+        Route::post('/add', [UsersController::class, 'postAdd'])
+            ->can('create', User::class);
+        Route::get('/edit/{user}', [UsersController::class, 'edit'])
+            ->name('edit')
+            ->can('users.edit');
+        Route::post('/edit/{user}', [UsersController::class, 'postEdit'])
+            ->can('users.edit');
+        Route::get('/delete/{user}', [UsersController::class, 'delete'])
+            ->name('delete')
+            ->can('users.delete');
     });
 });

@@ -11,6 +11,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 
 //Policy
 use App\Policies\PostPolicy;
+use App\Policies\UserPolicy;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -20,7 +21,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // khai báo Policy
-        Post::class => PostPolicy::class
+        Post::class => PostPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**

@@ -103,7 +103,9 @@
             <div id="collapse_users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('admin.users.index') }}">Danh Sách</a>
+                    @can('create', App\Models\User::class)
                     <a class="collapse-item" href="{{ route('admin.users.add') }}">Thêm Người Dùng</a>
+                    @endcan
                 </div>
             </div>
         </li>
