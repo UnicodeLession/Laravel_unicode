@@ -14,7 +14,9 @@
             </div>
         @endif
     </div>
-    <p><a href="{{route('admin.posts.add')}}" class="btn btn-primary btn-sm">Thêm mới</a></p>
+    @can('create', App\Models\Post::class)
+        <p><a href="{{route('admin.posts.add')}}" class="btn btn-primary btn-sm">Thêm mới</a></p>
+    @endcan
     <table class="table table-bordered">
         <thead>
             <tr>

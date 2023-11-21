@@ -12,7 +12,6 @@ class PostsController extends Controller
     //
     function index()
     {
-        $this->authorize('viewAny', Post::class);
         $lists = Post::orderBy('created_at', 'DESC')->get();
         return view('admin.posts.lists', compact('lists'));
     }

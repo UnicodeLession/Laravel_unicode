@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Posts;
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Modules;
-use App\Models\Groups;
+use App\Models\Group;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -19,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        // khai báo Policy
+        Post::class => PostPolicy::class
     ];
 
     /**
@@ -31,7 +32,6 @@ class AuthServiceProvider extends ServiceProvider
         /**
          * users.view
             1. Lấy Danh sách module
-            2.
         */
         $moduleList = Modules::all();
         if($moduleList->count() > 0){

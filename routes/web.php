@@ -10,6 +10,10 @@ use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\GroupsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UsersController;
+//Model
+use App\Models\Post;
+use App\Models\Group;
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,9 +57,14 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
 
     // Quản Lý Bài Viết
     Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function () {
-        Route::get('/', [PostsController::class, 'index'])->name('index');
-        Route::get('/add', [PostsController::class, 'add'])->name('add');
-        Route::post('/add', [PostsController::class, 'postAdd']);
+        Route::get('/', [PostsController::class, 'index'])
+            ->name('index')
+            ->can('viewAny', Post::class);
+        Route::get('/add', [PostsController::class, 'add'])
+            ->name('add')
+            ->can('create', Post::class);
+        Route::post('/add', [PostsController::class, 'postAdd'])
+            ->can('create', Post::class);
         Route::get('/edit/{post}', [PostsController::class, 'edit'])->name('edit');
         Route::post('/edit/{post}', [PostsController::class, 'postEdit']);
         Route::get('/delete/{post}', [PostsController::class, 'delete'])->name('delete');
