@@ -52,6 +52,37 @@ b3: Chạy lệnh dưới
 ```terminal
 composer dump-autoload
 ```
+
+## Authentication
++ ### Cài đặt
++ bước 1:
+```terminal
+composer require laravel/ui
+```
++ bước 2:
+```terminal
+php artisan ui bootstrap --auth
+```
++ bước 3:
+```terminal
+npm run dev
+```
+```terminal
+php artisan migrate
+```
++ bước 4: restart laravel
+```terminal
+php artisan serve
+```
+
+## Socialite: tích hợp login và register với Facebook, Twitter,...
++ bước 1:
+```termial
+composer require laravel/socialite
+```
+```php - config/app.php 
+```
+
 ## Các kiểu khác
 0. khi 
 ```php
@@ -237,25 +268,5 @@ $request->validate([
     + với lấy rollback step = 3  sẽ lấy batch to nhất rồi đến cái __bước__ cuối cùng của batch đó 
     + rồi sau khi rollback thì nó sẽ quay trở lại 3 bước có thể hiểu là sẽ mất đi 3 migrations
 
-## Authentication
-+ ### Cài đặt
-+ bước 1:
-```terminal
-composer require laravel/ui
-```
-+ bước 2:
-```terminal
-php artisan ui bootstrap --auth
-```
-+ bước 3:
-```terminal
-npm run dev
-```
-```terminal
-php artisan migrate
-```
-+ bước 4: restart laravel
-```terminal
-php artisan serve
-```
+
 * **_Custom Guard_**: Muốn dùng Authetication với nhiều chức vụ khác nhau như: các user vừa là admin vừa là user và mong muốn login admin có thể kế thừa login như user thì phải 
