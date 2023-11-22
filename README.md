@@ -7,6 +7,7 @@ php artisan serve
 ```terminal
 npm run dev
 ```
+## [Deploy project -> Heroku](https://online.unicode.vn/bai-hoc/bai-116-laravel-social-login-tich-hop-dang-nhap-facebook-phan-2)
 
 ## Set up
 0. Check:
