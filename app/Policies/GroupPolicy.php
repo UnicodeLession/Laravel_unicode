@@ -58,7 +58,7 @@ class GroupPolicy
         return ($user->id === $group->user_id );
     }
     public function permission(User $user, Group $group){
-        return ($user->id === $group->user_id);
+        return ($user->id === $group->user_id || $group->user_id === $user->user_id);
     }
     /**
      * Determine whether the user can restore the model.

@@ -90,8 +90,11 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
         Route::get('/delete/{group}', [GroupsController::class, 'delete'])
             ->name('delete')
             ->can('groups.delete');
-        Route::get('/permission/{group}', [GroupsController::class, 'permission'])->name('permission');
-        Route::post('/permission/{group}', [GroupsController::class, 'postPermission']);
+        Route::get('/permission/{group}', [GroupsController::class, 'permission'])
+            ->name('permission')
+            ->can('groups.permission');
+        Route::post('/permission/{group}', [GroupsController::class, 'postPermission'])
+            ->can('groups.permission');
     });
 
     // Quản Lý Users

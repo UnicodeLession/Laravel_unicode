@@ -78,6 +78,7 @@ class GroupsController extends Controller
 
     function permission(Group $group)
     {
+        $this->authorize('permission', $group);
         $modules = Modules::all();
         $roleListArray = [
             'view' => 'Xem',
@@ -103,6 +104,7 @@ class GroupsController extends Controller
 
     function postPermission(Group $group, Request $request)
     {
+        $this->authorize('permission', $group);
         if (!empty($request->role)){
             $roleArr = $request->role;
         }else{

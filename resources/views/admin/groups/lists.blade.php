@@ -73,7 +73,8 @@
                     <td>{{$item->name}}</td>
                     <td>{{(!empty($item->postBy->name)) ? $item->postBy->name : false}}</td>
                     <td class="d-flex justify-content-center">
-                        <a href="{{route('admin.groups.permission', $item)}}}" class="btn btn-primary btn-sm">Phân Quyền</a>
+                        <a href="{{route('admin.groups.permission', $item)}}}"
+                           class="btn btn-primary btn-sm disabled">Phân Quyền</a>
                     </td>
                     <td >
 
