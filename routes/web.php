@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * Mỗi chỉnh sửa gì xong thì phải làm theo 3 bước dưới
+        git add .
+        git commit -am "make it better"
+        git push heroku master
+*/
+
 Route::get('/', function () {
     return view('welcome');
 });
