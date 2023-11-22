@@ -87,7 +87,9 @@
             <div id="collapse_groups" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('admin.groups.index') }}">Danh Sách</a>
+                    @can('create', App\Models\Group::class)
                     <a class="collapse-item" href="{{ route('admin.groups.add') }}">Thêm Nhóm</a>
+                    @endcan
                 </div>
             </div>
         </li>

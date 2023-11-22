@@ -12,6 +12,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 //Policy
 use App\Policies\PostPolicy;
 use App\Policies\UserPolicy;
+use App\Policies\GroupPolicy;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         // khai báo Policy
         Post::class => PostPolicy::class,
         User::class => UserPolicy::class,
+        Group::class => GroupPolicy::class,
     ];
 
     /**

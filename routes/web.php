@@ -77,11 +77,19 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     // Quản Lý Groups
     Route::prefix('groups')->name('groups.')->middleware('can:groups')->group(function () {
         Route::get('/', [GroupsController::class, 'index'])->name('index');
-        Route::get('/add', [GroupsController::class, 'add'])->name('add');
-        Route::post('/add', [GroupsController::class, 'postAdd']);
-        Route::get('/edit/{group}', [GroupsController::class, 'edit'])->name('edit');
-        Route::post('/edit/{group}', [GroupsController::class, 'postEdit']);
-        Route::get('/delete/{group}', [GroupsController::class, 'delete'])->name('delete');
+        Route::get('/add', [GroupsController::class, 'add'])
+            ->name('add')
+            ->can('create', Group::class);
+        Route::post('/add', [GroupsController::class, 'postAdd'])
+            ->can('create', Group::class);
+        Route::get('/edit/{group}', [GroupsController::class, 'edit'])
+            ->name('edit')
+            ->can('groups.edit');
+        Route::post('/edit/{group}', [GroupsController::class, 'postEdit'])
+            ->can('groups.edit');
+        Route::get('/delete/{group}', [GroupsController::class, 'delete'])
+            ->name('delete')
+            ->can('groups.delete');
         Route::get('/permission/{group}', [GroupsController::class, 'permission'])->name('permission');
         Route::post('/permission/{group}', [GroupsController::class, 'postPermission']);
     });

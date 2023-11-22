@@ -30,6 +30,6 @@
         </div>
         @csrf
         <button type="submit" class="btn btn-primary btn-sm">Cập Nhật</button>
-        <a href="{{route('admin.users.index')}}" class="btn btn-success btn-sm">Quay Lại</a>
+        <a href="{{route('admin.groups.index')}}" class="btn btn-success btn-sm">Quay Lại</a>
     </form>
 @endsection

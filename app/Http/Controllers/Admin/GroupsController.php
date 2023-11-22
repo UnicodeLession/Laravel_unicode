@@ -16,8 +16,20 @@ class GroupsController extends Controller
     //
     function index()
     {
-        $lists = Group::all();
-        return view('admin.groups.lists', compact('lists'));
+        $group = new Group();
+        /**
+         * Note:
+         * Người của Group Admin có khi đc phân quyền edit or delete thì tất cả thành viên bên trong có quyền tác động tới tất cả các group khác bao gồm group Admin
+         * group admin thì nên để sẵn tất cả các quyền view, edit, delete, permission
+
+         * change: view, edit, delete, permission
+         * người không thuộc group Admin thì chỉ có thể change group mình tạo ra
+         */
+        $adminGroupId = Group::where('name', 'Administrator')->first()->id;
+        $can = Auth::user()->group_id === $adminGroupId;
+        $canChange = Group::where('user_id', Auth::user()->id)->get();
+        $others = Group::where('user_id','<>', Auth::user()->id)->get();
+        return view('admin.groups.lists', compact('canChange', 'others'));
     }
     function add(){
         $users = User::all();
@@ -36,9 +48,11 @@ class GroupsController extends Controller
             ->with('type', 'success');
     }
     function edit(Group $group){
+        $this->authorize('update', $group);
         return view('admin.groups.edit', compact('group'));
     }
     function postEdit(Group $group, Request $request){
+        $this->authorize('update', $group);
         $request->validate([
             'name' =>'required|unique:groups,name',
         ]);
@@ -49,6 +63,7 @@ class GroupsController extends Controller
             ->with('type', 'success');
     }
     function delete(Group $group){
+        $this->authorize('delete', $group);
         $userCount = $group->users()->count();
         if ($userCount == 0) {
             Group::destroy($group->id);

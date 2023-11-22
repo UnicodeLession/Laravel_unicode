@@ -14,7 +14,10 @@
             </div>
         @endif
     </div>
-    <p><a href="{{route('admin.groups.add')}}" class="btn btn-primary btn-sm">Thêm mới</a></p>
+    @can('create', App\Models\Group::class)
+        <p><a href="{{route('admin.groups.add')}}" class="btn btn-primary btn-sm">Thêm mới</a></p>
+    @endcan
+    @if ($canChange->count() > 0)
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -27,8 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            @if ($lists->count() > 0)
-                @foreach($lists as $key=>$item)
+                @foreach($canChange as $key=>$item)
                     <tr>
                         <td >{{$key + 1}}</td>
                         <td>{{$item->name}}</td>
@@ -37,20 +39,56 @@
                             <a href="{{route('admin.groups.permission', $item)}}}" class="btn btn-primary btn-sm">Phân Quyền</a>
                         </td>
                         <td >
-                            <a href="{{route('admin.groups.edit',[$item->id] )}}" class="btn btn-warning btn-sm">Sửa</a>
+
+                            <a href="{{route('admin.groups.edit',[$item->id] )}}"
+                               class="btn btn-warning btn-sm @cannot('groups.edit') disabled @endcannot">Sửa</a>
+
                         </td>
                         <td>
-                            <a href="{{route('admin.groups.delete', [$item->id])}} " onclick="return confirm('Bạn có chắc chắn muốn xóa nhóm này chứ?')" class="btn btn-danger btn-sm">Xóa</a>
+                            <a href="{{route('admin.groups.delete', [$item->id])}} "
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa nhóm này chứ?')"
+                               class="btn btn-danger btn-sm @cannot('groups.delete') disabled @endcannot">Xóa</a>
                         </td>
                     </tr>
                 @endforeach
-            @else
-                <tr>
-                    <td colspan="6">
-                        <div class="alert alert-danger text-center">Không có nhóm</div>
-                    </td>
-                </tr>
-            @endif
         </tbody>
     </table>
+    @endif
+    @if ($others->count() > 0)
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th width="5%" class="text-center">STT</th>
+                <th>Tên</th>
+                <th width="25%">Người Đăng</th>
+                <th width="10%" class="text-center">Phân Quyền</th>
+                <th width="5%" class="text-center">Sửa</th>
+                <th width="5%" class="text-center">Xóa</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($others as $key=>$item)
+                <tr>
+                    <td >{{$key + 1}}</td>
+                    <td>{{$item->name}}</td>
+                    <td>{{(!empty($item->postBy->name)) ? $item->postBy->name : false}}</td>
+                    <td class="d-flex justify-content-center">
+                        <a href="{{route('admin.groups.permission', $item)}}}" class="btn btn-primary btn-sm">Phân Quyền</a>
+                    </td>
+                    <td >
+
+                        <a href="{{route('admin.groups.edit',[$item->id] )}}"
+                           class="btn btn-warning btn-sm disabled">Sửa</a>
+
+                    </td>
+                    <td>
+                        <a href="{{route('admin.groups.delete', [$item->id])}} "
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa nhóm này chứ?')"
+                           class="btn btn-danger btn-sm disabled">Xóa</a>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    @endif
 @endsection
