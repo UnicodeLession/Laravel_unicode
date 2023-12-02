@@ -30,9 +30,5 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    'google' => [
-        'client_id' => '1001458156417-11cisnnatos72un3pjmksu14aci3do4h.apps.googleusercontent.com',
-        'client_secret' => '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',
-        'redirect' => 'https://laravel-login-social-e05cd9b25fd7.herokuapp.com/auth/google/callback'
-    ]
+
 ];

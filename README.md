@@ -84,6 +84,41 @@ composer require laravel/socialite
 ```php - config/app.php 
 ```
 
+## [Debug Laravel](https://github.com/barryvdh/laravel-debugbar)
++ bước 1: Cài: 
+```termial
+composer require barryvdh/laravel-debugbar --dev
+```
++ bước 2: ném vào config/app.php -> providers array:
+```php
+'providers' => [
+    // ...
+    Barryvdh\Debugbar\ServiceProvider::class,
+],
+
+```
++ bước 3:
+```termial
+php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
+```
+
+## [Table Render Value](https://yajrabox.com/docs/laravel-datatables/10.0)
++ bước 1: 
+```terminal 
+composer require yajra/laravel-datatables-oracle:"^10.3.1"
+```
++ bước 2: ném vào config/app.php -> providers array
+```php
+'providers' => [
+    // ...
+    Yajra\DataTables\DataTablesServiceProvider::class,
+],
+```
++ bước 3:
+```terminal
+php artisan vendor:publish --tag=datatables
+```
+
 ## Các kiểu khác
 0. khi 
 ```php
