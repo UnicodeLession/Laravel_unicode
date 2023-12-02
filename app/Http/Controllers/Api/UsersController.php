@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserCollection;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,13 +20,14 @@ class UsersController extends Controller
         if(!empty($where)){
             $users = $users->where($where);
         }
-        $users = $users->get();
+        $users = $users->paginate(1);
         if($users->count()){
             $status = 'success';
         }else{
             $status = 'no_data';
         }
 //        $users = UserResource::collection($users);
+        $users = UserCollection::collection($users, $status);
 
         $responses = [
             'status' =>$status,
